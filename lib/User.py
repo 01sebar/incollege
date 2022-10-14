@@ -10,6 +10,9 @@ class User:
     def getUserId(self):
         return self.userId
 
+    def isLoggedIn(self):
+        return self.userId != None
+
     def create(self, username, password, firstname, lastname):
         firstname = firstname.lower()
         lastname = lastname.lower()
@@ -31,6 +34,17 @@ class User:
         user = res.fetchone()
         return user
 
+    def findManyByLastname(self, lastname: str):
+        lastname = "%" + lastname.lower() + "%"
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            # We use "LIKE" instead of "=" to potentially allow for better search results
+            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ? LIMIT 1",
+            (lastname, ))
+        users = res.fetchmany()
+        return users
+
     def findOne(self, userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -39,7 +53,6 @@ class User:
             (userId, ))
         user = res.fetchone()
         return user
-
 
     def createDefaultSettings(self):
         setting = Setting()
