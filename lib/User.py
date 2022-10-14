@@ -42,7 +42,7 @@ class User:
         cur = con.cursor()
         res = cur.execute(
             # We use "LIKE" instead of "=" to potentially allow for better search results
-            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ? LIMIT 1",
+            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ?",
             (lastname, ))
         users = res.fetchmany()
         return users
@@ -53,9 +53,20 @@ class User:
         cur = con.cursor()
         res = cur.execute(
             # We use "LIKE" instead of "=" to potentially allow for better search results
-            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_university LIKE ? LIMIT 1",
+            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_university LIKE ?",
             (university, ))
         users = res.fetchmany()
+        return users
+
+    def findManyByMajor(self, major: str):
+        major = "%" + major.lower() + "%"
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            # We use "LIKE" instead of "=" to potentially allow for better search results
+            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_major LIKE ?",
+            (major, ))
+        users = res.fetchall()
         return users
 
     def findOne(self, userId):

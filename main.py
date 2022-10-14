@@ -108,6 +108,20 @@ def findSomeoneByUniversityScreen(loggedInUser: User):
 
 def findSomeoneByMajorScreen(loggedInUser: User):
     print("\n\Find Someone By Major Screen")
+    major = input(
+        "Enter the Major of the person you are searching for: ")
+    users = loggedInUser.findManyByMajor(major)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    else:
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
 
 
 def showMyNetworkScreen(loggedInUser: User):
