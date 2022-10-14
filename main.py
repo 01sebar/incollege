@@ -54,7 +54,7 @@ def findSomeoneScreen(loggedInUser):
     print("\n\tSearch By:\n")
     print("\t1: Last name")
     print("\t2: University")
-    print("\t3: University")
+    print("\t3: Major")
     selection = int(input("\t4: Return to options screen\n"))
     if (selection == 1):
         findSomeoneByLastNameScreen(loggedInUser)
@@ -72,8 +72,6 @@ def findSomeoneScreen(loggedInUser):
 
 def findSomeoneByLastNameScreen(loggedInUser: User):
     print("\n\tFind Someone By Last Name Screen")
-    con = sqlite3.connect("incollege.db")
-    cur = con.cursor()
     lastname = input(
         "Enter the last name of the person you are searching for: ")
     users = loggedInUser.findManyByLastname(lastname)
@@ -92,6 +90,20 @@ def findSomeoneByLastNameScreen(loggedInUser: User):
 
 def findSomeoneByUniversityScreen(loggedInUser: User):
     print("\n\Find Someone By University Screen")
+    university = input(
+        "Enter the university of the person you are searching for: ")
+    users = loggedInUser.findManyByUniversity(university)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    else:
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
 
 
 def findSomeoneByMajorScreen(loggedInUser: User):
