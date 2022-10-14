@@ -24,7 +24,7 @@ class Friend:
             "INSERT INTO friends (friend_from_user_id, friend_to_user_id, friend_is_invite) VALUES (?, ?, ?)",
             (self.userId, userToInviteID, 1))
         con.commit()
-        print("cur.lastrowid:", cur.lastrowid)
+        # print("cur.lastrowid:", cur.lastrowid)
         return cur.lastrowid
 
     def getInvites(self):

@@ -87,7 +87,7 @@ def findSomeoneByLastNameScreen(loggedInUser: User):
 
 
 def findSomeoneByUniversityScreen(loggedInUser: User):
-    print("\n\Find Someone By University Screen")
+    print("\n\tFind Someone By University Screen")
     university = input(
         "Enter the university of the person you are searching for: ")
     users = loggedInUser.findManyByUniversity(university)
@@ -145,8 +145,11 @@ def sendFriendInviteScreen(loggedInUser: User, users):
 def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
-    for myFriend in friend.findMyFriends():
-        print(myFriend)
+    if not friend.findMyFriends(): 
+        print("There is no one in your network...\n")
+    else:
+        for myFriend in friend.findMyFriends():
+            print(myFriend)
 
 
 def underConstructionScreen():
@@ -180,7 +183,7 @@ def optionsScreen(loggedInUser: User):
     print("\t3: Learn a new skill")
     print("\t4: for Useful Links.")
     print("\t5: for InCollege Important Links.")
-    print("\t6: show my network")
+    print("\t6: Show my network")
     friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
     print("\t7: You have", len(friendInvites), "new friend invites")
