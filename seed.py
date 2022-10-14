@@ -43,3 +43,17 @@ CREATE TABLE `settings` (
   FOREIGN KEY(setting_user_id) REFERENCES users(user_id)
 )
 """)
+# Create `friends` table
+cur.execute("""
+DROP TABLE IF EXISTS `friends`;
+""")
+cur.execute("""
+CREATE TABLE `friends` (
+  `friend_id` INTEGER PRIMARY KEY NOT NULL,
+  `friend_from_user_id` INTEGER NOT NULL,
+  `friend_to_user_id` INTEGER NOT NULL,
+  `friends_is_invite` INTEGER NOT NULL,
+  FOREIGN KEY(friend_from_user_id) REFERENCES users(user_id)
+  FOREIGN KEY(friend_to_user_id) REFERENCES users(user_id)
+)
+""")
