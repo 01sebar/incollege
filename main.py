@@ -223,11 +223,23 @@ def acceptInvitesScreen(loggedInUser: User):
         i += 1
     print("0: return to options screen\n")
     selection = int(
-        input("Select a user to accept their invite or 0 to cancel: "))
+        input("Select a user to accept/reject their invite or 0 to cancel: "))
     if selection == 0:
         optionsScreen(loggedInUser)
     else:
         # TO-DO
+        print(friendInvites[selection-1][2], friendInvites[selection-1][3])
+        print("1: Accept")
+        print("2: Reject")
+        print("0: Cancel")
+        decision = int(
+            input(""))
+        if decision == 1:
+            return
+        elif decision == 2:
+            return
+        else:
+            acceptInvitesScreen(loggedInUser)
         return
 
 

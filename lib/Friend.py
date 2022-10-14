@@ -37,3 +37,22 @@ class Friend:
             (self.userId, ))
         friends = res.fetchmany()
         return friends
+
+    def decideInvite(self, choice):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        if choice == 1:
+            cur.execute() # Need to add user to friends list on both ends
+            con.commit()
+        elif choice == 2:
+            cur.execute() # Need to remove user from invitations list on both ends
+            con.commit()
+        return
+
+    def addFriend():
+        #TO-DO
+        return
+
+    def removeFriend():
+        #TO-DO
+        return
