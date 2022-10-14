@@ -1,11 +1,11 @@
-# 5 unique student accounts
-#Gianni, Anthony, Sebastian, Jack, and Rishabh's scrum baby
+# Gianni, Anthony, Sebastian, Jack, and Rishabh's scrum baby
 import sqlite3
 import os
 import lib.checkStrUtils as checkStrUtils
 from lib.User import User
 from lib.Job import Job
 from lib.Setting import Setting
+from lib.Friend import Friend
 
 
 def postJobScreen(loggedInUser):
@@ -15,7 +15,7 @@ def postJobScreen(loggedInUser):
     res = cur.execute("SELECT COUNT() FROM jobs")
     userCount = res.fetchone()[0]
     print("Number of jobs: " + str(userCount))
-    if (userCount >= 5):
+    if (userCount >= 10):
         print("\tReached limit on jobs posted.\n \tPlease come back later.\n")
         return None
     title = input("Enter the Title of the position you are posting: ")
@@ -51,37 +51,84 @@ def jobScreen(loggedInUser):
 def findSomeoneScreen(loggedInUser):
     clearConsole()
     print("\n\tFind Someone you Know\n")
-    con = sqlite3.connect("incollege.db")
-    cur = con.cursor()
-    firstname = input(
-        "Enter the first name of the person you are searching for: \n")
-    firstname = firstname.lower()
-    lastname = input(
-        "Enter the last name of the person you are searching for: \n")
-    lastname = lastname.lower()
-    res = cur.execute(
-        "SELECT user_firstname, user_lastname FROM users WHERE user_firstname = ? AND user_lastname = ? LIMIT 1",
-        (firstname, lastname))
-    user = res.fetchone()
-    if (user == None):
-        print("They are not yet part of the InCollege system yet.")
-    else:
-        print("\nThey are a part of the InCollege System.")
+    print("\n\tSearch By:\n")
+    print("\t1: Last name")
+    print("\t2: University")
+    print("\t3: Major")
+    selection = int(input("\t4: Return to options screen\n"))
+    if (selection == 1):
+        findSomeoneByLastNameScreen(loggedInUser)
+    elif (selection == 2):
+        findSomeoneByUniversityScreen(loggedInUser)
+    elif (selection == 3):
+        findSomeoneByMajorScreen(loggedInUser)
+    elif (selection == 4):
         if (not loggedInUser):
-            print("\tWant to become a part of InCollege?")
-            print("\tLog-in or Sign-up to join your friends!\n")
-            print("Press \"0\" to return to home screen.")
-            print("Press \"1\" to log in using an existing account.")
-            loginI = int(input("Press \"2\" to create a new account.\n"))
-            if loginI == 1:
-                login()
-            elif loginI == 2:
-                signup()
-            elif loginI == 0:
-                clearConsole()
-                main()
-            else:
-                print("invalid input")
+            clearConsole()
+            main()
+        else:
+            optionsScreen(loggedInUser)
+
+
+def findSomeoneByLastNameScreen(loggedInUser: User):
+    print("\n\tFind Someone By Last Name Screen")
+    lastname = input(
+        "Enter the last name of the person you are searching for: ")
+    users = loggedInUser.findManyByLastname(lastname)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    else:
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
+
+
+def findSomeoneByUniversityScreen(loggedInUser: User):
+    print("\n\Find Someone By University Screen")
+    university = input(
+        "Enter the university of the person you are searching for: ")
+    users = loggedInUser.findManyByUniversity(university)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    else:
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
+
+
+def findSomeoneByMajorScreen(loggedInUser: User):
+    print("\n\Find Someone By Major Screen")
+    major = input(
+        "Enter the Major of the person you are searching for: ")
+    users = loggedInUser.findManyByMajor(major)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    else:
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
+
+
+def showMyNetworkScreen(loggedInUser: User):
+    print("\n\tShow My Network Screen")
+    friend = Friend(loggedInUser.getUserId())
+    for myFriend in friend.findMyFriends():
+        print(myFriend)
 
 
 def underConstructionScreen():
@@ -115,7 +162,8 @@ def optionsScreen(loggedInUser):
     print("\t3: Learn a new skill")
     print("\t4: for Useful Links.")
     print("\t5: for InCollege Important Links.")
-    selection = int(input("\t6: Log out\n"))
+    print("\t6: show my network")
+    selection = int(input("\t7: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreen(loggedInUser)
@@ -128,6 +176,8 @@ def optionsScreen(loggedInUser):
     elif selection == 5:
         InCollegeImportantLinks(loggedInUser)
     elif selection == 6:
+        showMyNetworkScreen(loggedInUser)
+    elif selection == 7:
         main()
 
 
@@ -221,9 +271,15 @@ def signup():
     lastname = input("Enter Last Name:")
     while (lastname == None):
         lastname = input("Enter Last Name: ")
+    university = input("Enter University:")
+    while (university == None):
+        university = input("Enter University: ")
+    major = input("Enter your Major:")
+    while (major == None):
+        major = input("Enter your Major: ")
 
     newUser = User(None)
-    newUser.create(username, password, firstname, lastname)
+    newUser.create(username, password, firstname, lastname, university, major)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
     main()
@@ -513,7 +569,7 @@ def main():
     if loginI == 1:
         videoScreen()
     elif loginI == 2:
-        findSomeoneScreen(0)
+        findSomeoneScreen(User(None))
     elif loginI == 3:
         login()
     elif loginI == 4:
