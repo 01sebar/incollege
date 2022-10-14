@@ -13,15 +13,16 @@ class User:
     def isLoggedIn(self):
         return self.userId != None
 
-    def create(self, username, password, firstname, lastname, university):
+    def create(self, username, password, firstname, lastname, university, major):
         firstname = firstname.lower()
         lastname = lastname.lower()
         university = university.lower()
+        major = major.lower()
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university) VALUES (?, ?, ?, ?, ?)",
-            (username, password, firstname, lastname, university))
+            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university, user_major) VALUES (?, ?, ?, ?, ?, ?)",
+            (username, password, firstname, lastname, university, major))
         con.commit()
         self.userId = cur.lastrowid
         return self.userId

@@ -260,9 +260,12 @@ def signup():
     university = input("Enter University:")
     while (university == None):
         university = input("Enter University: ")
+    major = input("Enter your Major:")
+    while (major == None):
+        major = input("Enter your Major: ")
 
     newUser = User(None)
-    newUser.create(username, password, firstname, lastname, university)
+    newUser.create(username, password, firstname, lastname, university, major)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
     main()

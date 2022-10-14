@@ -12,7 +12,8 @@ CREATE TABLE `users` (
   `user_password` varchar(12) NOT NULL,
   `user_firstname` varchar(32) NOT NULL,
   `user_lastname` varchar(32) NOT NULL,
-  `user_university` varchar(64) NOT NULL
+  `user_university` varchar(64) NOT NULL,
+  `user_major` varchar(64) NOT NULL
 )
 """)
 # Create `jobs` table
