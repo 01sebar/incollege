@@ -83,11 +83,13 @@ def findSomeoneByLastNameScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        sendFriendInviteScreen(loggedInUser, users)
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
 
 
 def findSomeoneByUniversityScreen(loggedInUser: User):
-    print("\n\tFind Someone By University Screen")
+    print("\n\Find Someone By University Screen")
     university = input(
         "Enter the university of the person you are searching for: ")
     users = loggedInUser.findManyByUniversity(university)
@@ -99,7 +101,9 @@ def findSomeoneByUniversityScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        sendFriendInviteScreen(loggedInUser, users)
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
 
 
 def findSomeoneByMajorScreen(loggedInUser: User):
@@ -115,41 +119,16 @@ def findSomeoneByMajorScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        sendFriendInviteScreen(loggedInUser, users)
-
-
-def sendFriendInviteScreen(loggedInUser: User, users):
-    if len(users) == 0:
-        print("No users found")
-        input("\tPress any key to return to find someone screen\n")
-        findSomeoneScreen(loggedInUser)
-    i = 1
-    for user in users:
-        print(str(i) + ": ", user[1], user[2])
-        i += 1
-    print("0: return to find someone screen\n")
-    selection = int(input("Select a user to add as a friend or 0 to cancel: "))
-    if selection == 0:
-        findSomeoneScreen(loggedInUser)
-    else:
-        # users[selection - 1] since we start with i = 1
-        userToAdd = users[selection - 1]
-        userToAddId = userToAdd[0]
-        friend = Friend(loggedInUser.getUserId())
-        friend.sendInvite(userToAddId)
-        print("invite sent!")
-        input("\tPress any key to return to find someone screen\n")
-        findSomeoneScreen(loggedInUser)
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
 
 
 def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
-    if not friend.findMyFriends(): 
-        print("There is no one in your network...\n")
-    else:
-        for myFriend in friend.findMyFriends():
-            print(myFriend)
+    for myFriend in friend.findMyFriends():
+        print(myFriend)
 
 
 def underConstructionScreen():
@@ -174,7 +153,7 @@ def skillsScreen(loggedInUser):
     underConstructionScreen()
 
 
-def optionsScreen(loggedInUser: User):
+def optionsScreen(loggedInUser):
     clearConsole()
     print("\n\tOptions Screen")
     print("Select an option:")
@@ -183,11 +162,8 @@ def optionsScreen(loggedInUser: User):
     print("\t3: Learn a new skill")
     print("\t4: for Useful Links.")
     print("\t5: for InCollege Important Links.")
-    print("\t6: Show my network")
-    friend = Friend(loggedInUser.getUserId())
-    friendInvites = friend.getInvites()
-    print("\t7: You have", len(friendInvites), "new friend invites")
-    selection = int(input("\t8: Log out\n"))
+    print("\t6: show my network")
+    selection = int(input("\t7: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreen(loggedInUser)
@@ -202,45 +178,7 @@ def optionsScreen(loggedInUser: User):
     elif selection == 6:
         showMyNetworkScreen(loggedInUser)
     elif selection == 7:
-        acceptInvitesScreen(loggedInUser)
-    elif selection == 8:
         main()
-
-
-def acceptInvitesScreen(loggedInUser: User):
-    print("\n\tAccept Invites Screen")
-    friend = Friend(loggedInUser.getUserId())
-    friendInvites = friend.getInvites()
-    if len(friendInvites) == 0:
-        print("You have no pending invites")
-        input("Press any key to return to the options screen")
-        optionsScreen(loggedInUser)
-        return
-
-    i = 1
-    for friendInvite in friendInvites:
-        print(str(i) + ":", friendInvite[2], friendInvite[3])
-        i += 1
-    print("0: return to options screen\n")
-    selection = int(
-        input("Select a user to accept/reject their invite or 0 to cancel: "))
-    if selection == 0:
-        optionsScreen(loggedInUser)
-    else:
-        # TO-DO
-        print(friendInvites[selection-1][2], friendInvites[selection-1][3])
-        print("1: Accept")
-        print("2: Reject")
-        print("0: Cancel")
-        decision = int(
-            input(""))
-        if decision == 1:
-            return
-        elif decision == 2:
-            return
-        else:
-            acceptInvitesScreen(loggedInUser)
-        return
 
 
 def checkIfUsernameIsUniqueInDB(username):
