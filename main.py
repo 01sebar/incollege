@@ -51,37 +51,51 @@ def jobScreen(loggedInUser):
 def findSomeoneScreen(loggedInUser):
     clearConsole()
     print("\n\tFind Someone you Know\n")
+    print("\n\tSearch By:\n")
+    print("\t1: Last name")
+    print("\t2: University")
+    print("\t3: University")
+    selection = int(input("\t4: Return to options screen\n"))
+    if (selection == 1):
+        findSomeoneByLastNameScreen(loggedInUser)
+    elif (selection == 2):
+        findSomeoneByUniversityScreen(loggedInUser)
+    elif (selection == 3):
+        findSomeoneByMajorScreen(loggedInUser)
+    elif (selection == 4):
+        if (not loggedInUser):
+            clearConsole()
+            main()
+        else:
+            optionsScreen(loggedInUser)
+
+
+def findSomeoneByLastNameScreen(loggedInUser: User):
+    print("\n\tFind Someone By Last Name Screen")
     con = sqlite3.connect("incollege.db")
     cur = con.cursor()
-    firstname = input(
-        "Enter the first name of the person you are searching for: \n")
-    firstname = firstname.lower()
     lastname = input(
-        "Enter the last name of the person you are searching for: \n")
-    lastname = lastname.lower()
-    res = cur.execute(
-        "SELECT user_firstname, user_lastname FROM users WHERE user_firstname = ? AND user_lastname = ? LIMIT 1",
-        (firstname, lastname))
-    user = res.fetchone()
-    if (user == None):
-        print("They are not yet part of the InCollege system yet.")
+        "Enter the last name of the person you are searching for: ")
+    users = loggedInUser.findManyByLastname(lastname)
+    if not loggedInUser.isLoggedIn():
+        if len(users) == 0:
+            print("No users found")
+        for user in users:
+            print(user[1], user[2])
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
     else:
-        print("\nThey are a part of the InCollege System.")
-        if (not loggedInUser):
-            print("\tWant to become a part of InCollege?")
-            print("\tLog-in or Sign-up to join your friends!\n")
-            print("Press \"0\" to return to home screen.")
-            print("Press \"1\" to log in using an existing account.")
-            loginI = int(input("Press \"2\" to create a new account.\n"))
-            if loginI == 1:
-                login()
-            elif loginI == 2:
-                signup()
-            elif loginI == 0:
-                clearConsole()
-                main()
-            else:
-                print("invalid input")
+        i = 1
+        for user in users:
+            print(str(i) + ": ", user[1], user[2])
+
+
+def findSomeoneByUniversityScreen(loggedInUser: User):
+    print("\n\Find Someone By University Screen")
+
+
+def findSomeoneByMajorScreen(loggedInUser: User):
+    print("\n\Find Someone By Major Screen")
 
 
 def showMyNetworkScreen(loggedInUser: User):
@@ -523,7 +537,7 @@ def main():
     if loginI == 1:
         videoScreen()
     elif loginI == 2:
-        findSomeoneScreen(0)
+        findSomeoneScreen(User(None))
     elif loginI == 3:
         login()
     elif loginI == 4:
