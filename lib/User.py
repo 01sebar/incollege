@@ -13,14 +13,15 @@ class User:
     def isLoggedIn(self):
         return self.userId != None
 
-    def create(self, username, password, firstname, lastname):
+    def create(self, username, password, firstname, lastname, university):
         firstname = firstname.lower()
         lastname = lastname.lower()
+        university = university.lower()
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname) VALUES (?, ?, ?, ?)",
-            (username, password, firstname, lastname))
+            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university) VALUES (?, ?, ?, ?, ?)",
+            (username, password, firstname, lastname, university))
         con.commit()
         self.userId = cur.lastrowid
         return self.userId
@@ -42,6 +43,17 @@ class User:
             # We use "LIKE" instead of "=" to potentially allow for better search results
             "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ? LIMIT 1",
             (lastname, ))
+        users = res.fetchmany()
+        return users
+
+    def findManyByUniversity(self, university: str):
+        university = "%" + university.lower() + "%"
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            # We use "LIKE" instead of "=" to potentially allow for better search results
+            "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_university LIKE ? LIMIT 1",
+            (university, ))
         users = res.fetchmany()
         return users
 
