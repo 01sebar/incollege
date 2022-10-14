@@ -24,5 +24,16 @@ class Friend:
             "INSERT INTO friends (friend_from_user_id, friend_to_user_id, friend_is_invite) VALUES (?, ?, ?)",
             (self.userId, userToInviteID, 1))
         con.commit()
-        self.userId = cur.lastrowid
-        return self.userId
+        print("cur.lastrowid:", cur.lastrowid)
+        return cur.lastrowid
+
+    def getInvites(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            """SELECT friend_id, user_id, user_firstname, user_lastname FROM friends
+            INNER JOIN users ON user_id=friend_to_user_id
+            WHERE friend_to_user_id = ? AND friend_is_invite = 1""",
+            (self.userId, ))
+        friends = res.fetchmany()
+        return friends

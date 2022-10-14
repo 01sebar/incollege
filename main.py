@@ -171,7 +171,7 @@ def skillsScreen(loggedInUser):
     underConstructionScreen()
 
 
-def optionsScreen(loggedInUser):
+def optionsScreen(loggedInUser: User):
     clearConsole()
     print("\n\tOptions Screen")
     print("Select an option:")
@@ -181,7 +181,10 @@ def optionsScreen(loggedInUser):
     print("\t4: for Useful Links.")
     print("\t5: for InCollege Important Links.")
     print("\t6: show my network")
-    selection = int(input("\t7: Log out\n"))
+    friend = Friend(loggedInUser.getUserId())
+    friendInvites = friend.getInvites()
+    print("\t7: You have", len(friendInvites), "new friend invites")
+    selection = int(input("\t8: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreen(loggedInUser)
@@ -196,7 +199,33 @@ def optionsScreen(loggedInUser):
     elif selection == 6:
         showMyNetworkScreen(loggedInUser)
     elif selection == 7:
+        acceptInvitesScreen(loggedInUser)
+    elif selection == 8:
         main()
+
+
+def acceptInvitesScreen(loggedInUser: User):
+    print("\n\tAccept Invites Screen")
+    friend = Friend(loggedInUser.getUserId())
+    friendInvites = friend.getInvites()
+    if len(friendInvites) == 0:
+        print("You have no pending invites")
+        input("Press any key to return to the options screen")
+        optionsScreen(loggedInUser)
+        return
+
+    i = 1
+    for friendInvite in friendInvites:
+        print(str(i) + ":", friendInvite[2], friendInvite[3])
+        i += 1
+    print("0: return to options screen\n")
+    selection = int(
+        input("Select a user to accept their invite or 0 to cancel: "))
+    if selection == 0:
+        optionsScreen(loggedInUser)
+    else:
+        # TO-DO
+        return
 
 
 def checkIfUsernameIsUniqueInDB(username):
