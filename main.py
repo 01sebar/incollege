@@ -5,6 +5,7 @@ import lib.checkStrUtils as checkStrUtils
 from lib.User import User
 from lib.Job import Job
 from lib.Setting import Setting
+from lib.Friend import Friend
 
 
 def postJobScreen(loggedInUser):
@@ -83,6 +84,13 @@ def findSomeoneScreen(loggedInUser):
                 print("invalid input")
 
 
+def showMyNetworkScreen(loggedInUser: User):
+    print("\n\tShow My Network Screen")
+    friend = Friend(loggedInUser.getUserId())
+    for myFriend in friend.findMyFriends():
+        print(myFriend)
+
+
 def underConstructionScreen():
     print("\n\t~ Under Construction ~")
 
@@ -114,7 +122,8 @@ def optionsScreen(loggedInUser):
     print("\t3: Learn a new skill")
     print("\t4: for Useful Links.")
     print("\t5: for InCollege Important Links.")
-    selection = int(input("\t6: Log out\n"))
+    print("\t6: show my network")
+    selection = int(input("\t7: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreen(loggedInUser)
@@ -127,6 +136,8 @@ def optionsScreen(loggedInUser):
     elif selection == 5:
         InCollegeImportantLinks(loggedInUser)
     elif selection == 6:
+        showMyNetworkScreen(loggedInUser)
+    elif selection == 7:
         main()
 
 
