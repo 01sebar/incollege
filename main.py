@@ -83,9 +83,7 @@ def findSomeoneByLastNameScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        i = 1
-        for user in users:
-            print(str(i) + ": ", user[1], user[2])
+        sendFriendInviteScreen(loggedInUser, users)
 
 
 def findSomeoneByUniversityScreen(loggedInUser: User):
@@ -101,9 +99,7 @@ def findSomeoneByUniversityScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        i = 1
-        for user in users:
-            print(str(i) + ": ", user[1], user[2])
+        sendFriendInviteScreen(loggedInUser, users)
 
 
 def findSomeoneByMajorScreen(loggedInUser: User):
@@ -119,9 +115,31 @@ def findSomeoneByMajorScreen(loggedInUser: User):
         input("\tPress any key to return to find someone screen\n")
         findSomeoneScreen(loggedInUser)
     else:
-        i = 1
-        for user in users:
-            print(str(i) + ": ", user[1], user[2])
+        sendFriendInviteScreen(loggedInUser, users)
+
+
+def sendFriendInviteScreen(loggedInUser: User, users):
+    if len(users) == 0:
+        print("No users found")
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
+    i = 1
+    for user in users:
+        print(str(i) + ": ", user[1], user[2])
+        i += 1
+    print("0: return to find someone screen\n")
+    selection = int(input("Select a user to add as a friend or 0 to cancel: "))
+    if selection == 0:
+        findSomeoneScreen(loggedInUser)
+    else:
+        # users[selection - 1] since we start with i = 1
+        userToAdd = users[selection - 1]
+        userToAddId = userToAdd[0]
+        friend = Friend(loggedInUser.getUserId())
+        friend.sendInvite(userToAddId)
+        print("invite sent!")
+        input("\tPress any key to return to find someone screen\n")
+        findSomeoneScreen(loggedInUser)
 
 
 def showMyNetworkScreen(loggedInUser: User):
