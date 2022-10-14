@@ -16,3 +16,13 @@ class Friend:
             (self.userId, ))
         friends = res.fetchmany()
         return friends
+
+    def sendInvite(self, userToInviteID):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO friends (friend_from_user_id, friend_to_user_id, friend_is_invite) VALUES (?, ?, ?)",
+            (self.userId, userToInviteID, 1))
+        con.commit()
+        self.userId = cur.lastrowid
+        return self.userId
