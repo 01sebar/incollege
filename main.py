@@ -1,5 +1,4 @@
-# 5 unique student accounts
-#Gianni, Anthony, Sebastian, Jack, and Rishabh's scrum baby
+# Gianni, Anthony, Sebastian, Jack, and Rishabh's scrum baby
 import sqlite3
 import os
 import lib.checkStrUtils as checkStrUtils
@@ -15,7 +14,7 @@ def postJobScreen(loggedInUser):
     res = cur.execute("SELECT COUNT() FROM jobs")
     userCount = res.fetchone()[0]
     print("Number of jobs: " + str(userCount))
-    if (userCount >= 5):
+    if (userCount >= 10):
         print("\tReached limit on jobs posted.\n \tPlease come back later.\n")
         return None
     title = input("Enter the Title of the position you are posting: ")
