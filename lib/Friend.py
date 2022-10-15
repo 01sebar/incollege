@@ -42,11 +42,12 @@ class Friend:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         if choice == 1:
-            cur.execute() # Need to add user to friends list on both ends
-            con.commit()
+            cur.execute("""""") # Need to add user to friends list on both ends
         elif choice == 2:
-            cur.execute() # Need to remove user from invitations list on both ends
-            con.commit()
+            cur.execute("""""") # Need to remove user from invitations list on both ends
+        else:
+            return
+        con.commit()
         return
 
     def addFriend():
