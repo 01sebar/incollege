@@ -235,9 +235,11 @@ def acceptInvitesScreen(loggedInUser: User):
         decision = int(
             input(""))
         if decision == 1:
-            return
+            print("Accepted")
+            acceptInvitesScreen(loggedInUser)
         elif decision == 2:
-            return
+            print("Rejected")
+            acceptInvitesScreen(loggedInUser)
         else:
             acceptInvitesScreen(loggedInUser)
         return
