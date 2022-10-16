@@ -165,7 +165,8 @@ def showMyNetworkScreen(loggedInUser: User):
     print("2: No")
     answer = int(input())
     if answer == 1:
-        friend.removeFriend(friendsList[friendToDecide-1])
+        friendId = friendsList[friendToDecide-1][0]
+        friend.removeFriend(friendId)
     elif answer == 2:
         optionsScreen(loggedInUser)
 
@@ -251,18 +252,18 @@ def acceptInvitesScreen(loggedInUser: User):
         print("1: Accept")
         print("2: Reject")
         print("0: Cancel")
-        key = str(friendInvites[selection-1][0])
+        friendId = friendInvites[selection-1][0]
         decision = int(
             input(""))
         if decision == 1:
             clearConsole()
             print("Accepted\n")
-            friend.addFriend(key)
+            friend.addFriend(friendId)
             acceptInvitesScreen(loggedInUser)
         elif decision == 2:
             clearConsole()
             print("Rejected\n")
-            friend.rejectInvite(key)
+            friend.rejectInvite(friendId)
             acceptInvitesScreen(loggedInUser)
         elif decision == 0:
             acceptInvitesScreen(loggedInUser)
