@@ -146,10 +146,18 @@ def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
     if not friend.findMyFriends(): 
-        print("There is no one in your network...\n")
+        if not friend.getFriends():
+            print("There is no one in your network...\n")
+        else:
+            i = 1 
+            for myFriend in friend.getFriends():
+                print(str(i), ":", myFriend[2], myFriend[3])
+                i += 1
     else:
+        i = 1 
         for myFriend in friend.findMyFriends():
-            print(myFriend)
+            print(str(i), ":", myFriend[2], myFriend[3])
+            i += 1
 
 
 def underConstructionScreen():
