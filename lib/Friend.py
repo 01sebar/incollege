@@ -45,19 +45,20 @@ class Friend:
             (0, friendKey)) # Need to remove user from invitations list on both ends
         con.commit()
         return
-
-    def removeFriend():
-        #TO-DO
-        return
-
-    def rejectInvite(self, friendKey):
-        print(self)
-        print(friendKey)
+    
+    def removeOne(self, friendId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        cur.execute("""DELETE FROM friends WHERE friend_id = ?""", 
-            (friendKey)) # Need to remove user from invitations list on both ends
+        cur.execute("""DELETE FROM friends WHERE friend_id = ?""", (friendId,))
         con.commit()
+        return
+
+    def removeFriend(self, friendId):
+        self.removeOne(friendId)
+        return
+
+    def rejectInvite(self, friendId):
+        self.removeOne(friendId)
         return
 
     def getFriends(self):

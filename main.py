@@ -145,23 +145,37 @@ def sendFriendInviteScreen(loggedInUser: User, users):
 def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
-    if not friend.findMyFriends(): 
-        if not friend.getFriends():
-            print("There is no one in your network...\n")
-        else:
-            i = 1 
-            for myFriend in friend.getFriends():
-                print(str(i), ":", myFriend[2], myFriend[3])
-                i += 1
+    friendsListOut = friend.findMyFriends()
+    friendsListIn = friend.getFriends()
+    friendsList = friendsListOut + friendsListIn
+    if not friendsList: 
+        print("There is no one in your network...\n")
+        input("\tPress any key to return to options screen\n")
+        optionsScreen(loggedInUser)
     else:
         i = 1 
-        for myFriend in friend.findMyFriends():
+        for myFriend in friendsList:
             print(str(i), ":", myFriend[2], myFriend[3])
             i += 1
+    friendToDecide = int(input("Select a friend or 0 to return to options\n"))
+    if friendToDecide == 0:
+        optionsScreen(loggedInUser)
+    print("Would you like to remove this friend?")
+    print("1: Yes")
+    print("2: No")
+    answer = int(input())
+    if answer == 1:
+        friendId = friendsList[friendToDecide-1][0]
+        friend.removeFriend(friendId)
+        optionsScreen(loggedInUser)
+    elif answer == 2:
+        optionsScreen(loggedInUser)
+
 
 
 def underConstructionScreen():
-    print("\n\t~ Under Construction ~")
+    input("\n\t~ Under Construction ~ \n\tPress any key to restart")
+    main()
 
 
 def clearConsole():
@@ -240,18 +254,18 @@ def acceptInvitesScreen(loggedInUser: User):
         print("1: Accept")
         print("2: Reject")
         print("0: Cancel")
-        key = str(friendInvites[selection-1][0])
+        friendId = friendInvites[selection-1][0]
         decision = int(
             input(""))
         if decision == 1:
             clearConsole()
             print("Accepted\n")
-            friend.addFriend(key)
+            friend.addFriend(friendId)
             acceptInvitesScreen(loggedInUser)
         elif decision == 2:
             clearConsole()
             print("Rejected\n")
-            friend.rejectInvite(key)
+            friend.rejectInvite(friendId)
             acceptInvitesScreen(loggedInUser)
         elif decision == 0:
             acceptInvitesScreen(loggedInUser)
