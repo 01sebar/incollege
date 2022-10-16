@@ -145,19 +145,30 @@ def sendFriendInviteScreen(loggedInUser: User, users):
 def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
-    if not friend.findMyFriends(): 
-        if not friend.getFriends():
-            print("There is no one in your network...\n")
-        else:
-            i = 1 
-            for myFriend in friend.getFriends():
-                print(str(i), ":", myFriend[2], myFriend[3])
-                i += 1
+    friendsListOut = friend.findMyFriends()
+    friendsListIn = friend.getFriends()
+    friendsList = friendsListOut + friendsListIn
+    if not friendsList: 
+        print("There is no one in your network...\n")
+        input("\tPress any key to return to options screen\n")
+        optionsScreen(loggedInUser)
     else:
         i = 1 
-        for myFriend in friend.findMyFriends():
+        for myFriend in friendsList:
             print(str(i), ":", myFriend[2], myFriend[3])
             i += 1
+    friendToDecide = int(input("Select a friend or 0 to return to options\n"))
+    if friendToDecide == 0:
+        optionsScreen(loggedInUser)
+    print("Would you like to remove this friend?")
+    print("1: Yes")
+    print("2: No")
+    answer = int(input())
+    if answer == 1:
+        friend.removeFriend(friendsList[friendToDecide-1])
+    elif answer == 2:
+        optionsScreen(loggedInUser)
+
 
 
 def underConstructionScreen():

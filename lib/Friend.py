@@ -46,13 +46,16 @@ class Friend:
         con.commit()
         return
 
-    def removeFriend():
-        #TO-DO
+    def removeFriend(self, friendRemove):
+        print(friendRemove)
+        key = friendRemove[0]
+        print(key)
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute("""DELETE FROM friends WHERE friend_to_user_id = ?""", (str(key)))
         return
 
     def rejectInvite(self, friendKey):
-        print(self)
-        print(friendKey)
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute("""DELETE FROM friends WHERE friend_id = ?""", 
