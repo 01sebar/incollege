@@ -167,13 +167,15 @@ def showMyNetworkScreen(loggedInUser: User):
     if answer == 1:
         friendId = friendsList[friendToDecide-1][0]
         friend.removeFriend(friendId)
+        optionsScreen(loggedInUser)
     elif answer == 2:
         optionsScreen(loggedInUser)
 
 
 
 def underConstructionScreen():
-    print("\n\t~ Under Construction ~")
+    input("\n\t~ Under Construction ~ \n\tPress any key to restart")
+    main()
 
 
 def clearConsole():
