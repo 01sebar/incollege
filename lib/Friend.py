@@ -32,28 +32,30 @@ class Friend:
         cur = con.cursor()
         res = cur.execute(
             """SELECT friend_id, user_id, user_firstname, user_lastname FROM friends
-            INNER JOIN users ON user_id=friend_to_user_id
+            INNER JOIN users ON user_id=friend_from_user_id
             WHERE friend_to_user_id = ? AND friend_is_invite = 1""",
             (self.userId, ))
         friends = res.fetchmany()
         return friends
 
-    def decideInvite(self, choice):
+    def addFriend(self, friendKey):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        if choice == 1:
-            cur.execute("""""") # Need to add user to friends list on both ends
-        elif choice == 2:
-            cur.execute("""""") # Need to remove user from invitations list on both ends
-        else:
-            return
+        cur.execute("""UPDATE friends SET friend_is_invite = ? WHERE friend_id = ?""",
+            (0, friendKey)) # Need to remove user from invitations list on both ends
         con.commit()
-        return
-
-    def addFriend():
-        #TO-DO
         return
 
     def removeFriend():
         #TO-DO
+        return
+
+    def rejectInvite(self, friendKey):
+        print(self)
+        print(friendKey)
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute("""DELETE FROM friends WHERE friend_id = ?""", 
+            (friendKey)) # Need to remove user from invitations list on both ends
+        con.commit()
         return
