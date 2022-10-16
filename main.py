@@ -232,15 +232,20 @@ def acceptInvitesScreen(loggedInUser: User):
         print("1: Accept")
         print("2: Reject")
         print("0: Cancel")
+        key = str(friendInvites[selection-1][0])
         decision = int(
             input(""))
         if decision == 1:
-            print("Accepted")
+            clearConsole()
+            print("Accepted\n")
+            friend.addFriend(key)
             acceptInvitesScreen(loggedInUser)
         elif decision == 2:
-            print("Rejected")
+            clearConsole()
+            print("Rejected\n")
+            friend.rejectInvite(key)
             acceptInvitesScreen(loggedInUser)
-        else:
+        elif decision == 0:
             acceptInvitesScreen(loggedInUser)
         return
 
