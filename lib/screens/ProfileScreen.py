@@ -1,7 +1,9 @@
+from cmath import exp
 from os import system
 from traceback import print_tb
 from lib.User import User
 from lib.Profile import Profile
+from lib.screens.ExperienceScreen import ExperienceScreen
 
 class ProfileScreen:
 
@@ -9,6 +11,7 @@ class ProfileScreen:
         self.loggedInUser = loggedInUser
     
     def render(self):
+        system('clear')
         profile = Profile(self.loggedInUser)
         if profile.exists():
             self.view()
@@ -65,7 +68,7 @@ class ProfileScreen:
             description = input("Set Description: ")
             profile.setDescription(description)
         elif select == "5":
-            print("experience")
+            ExperienceScreen(profile.getProfileId()).render()
         elif select == "6":
             print("education")
         elif select == "7":

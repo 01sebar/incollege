@@ -46,7 +46,7 @@ class User:
             # We use "LIKE" instead of "=" to potentially allow for better search results
             "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ?",
             (lastname, ))
-        users = res.fetchmany()
+        users = res.fetchall()
         return users
 
     def findManyByUniversity(self, university: str):
@@ -57,7 +57,7 @@ class User:
             # We use "LIKE" instead of "=" to potentially allow for better search results
             "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_university LIKE ?",
             (university, ))
-        users = res.fetchmany()
+        users = res.fetchall()
         return users
 
     def findManyByMajor(self, major: str):
