@@ -6,6 +6,7 @@ from lib.User import User
 from lib.Job import Job
 from lib.Setting import Setting
 from lib.Friend import Friend
+from lib.screens.ProfileScreen import ProfileScreen
 
 
 def postJobScreen(loggedInUser):
@@ -209,7 +210,8 @@ def optionsScreen(loggedInUser: User):
     friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
     print("\t7: You have", len(friendInvites), "new friend invites")
-    selection = int(input("\t8: Log out\n"))
+    print("\t8: View my profile")
+    selection = int(input("\t9: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreen(loggedInUser)
@@ -226,6 +228,10 @@ def optionsScreen(loggedInUser: User):
     elif selection == 7:
         acceptInvitesScreen(loggedInUser)
     elif selection == 8:
+        profileScreen = ProfileScreen(loggedInUser)
+        profileScreen.render()
+        optionsScreen(loggedInUser)
+    elif selection == 9:
         main()
 
 

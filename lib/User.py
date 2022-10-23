@@ -1,5 +1,6 @@
 import sqlite3
 from lib.Setting import Setting
+from lib.utils.Format import Format
 
 
 class User:
@@ -16,8 +17,9 @@ class User:
     def create(self, username, password, firstname, lastname, university, major):
         firstname = firstname.lower()
         lastname = lastname.lower()
-        university = university.lower()
-        major = major.lower()
+        format = Format()
+        university = format.titleCase(university)
+        major = format.titleCase(major)
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
@@ -84,3 +86,23 @@ class User:
         setting.create("sms", "true", self.userId)
         setting.create("targetedAdvertising", "true", self.userId)
         setting.create("language", "english", self.userId)
+
+    def updateUniversity(self, university: str):
+        format = Format()
+        university = format.titleCase(university)
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute(
+            "UPDATE users SET user_university = ? WHERE user_id = ?",
+            (university, self.userId))
+        con.commit()
+
+    def updateMajor(self, major: str):
+        format = Format()
+        major = format.titleCase(major)
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute(
+            "UPDATE users SET user_major = ? WHERE user_id = ?",
+            (major, self.userId))
+        con.commit()
