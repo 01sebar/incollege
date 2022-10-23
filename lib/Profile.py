@@ -6,6 +6,14 @@ class Profile:
     def __init__(self, loggedInUser: User):
         self.loggedInUser = loggedInUser
 
+    def create(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO profiles (profile_user_id) VALUES (?)",
+                    (self.loggedInUser.getUserId(),))
+        con.commit()
+        return cur.lastrowid
+
     def exists(self):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
