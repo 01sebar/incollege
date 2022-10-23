@@ -72,3 +72,20 @@ CREATE TABLE `profiles` (
   FOREIGN KEY(profile_user_id) REFERENCES users(user_id)
 )
 """)
+# Create `experiences` table
+cur.execute("""
+DROP TABLE IF EXISTS `experiences`;
+""")
+cur.execute("""
+CREATE TABLE `experiences` (
+  `experience_id` INTEGER PRIMARY KEY NOT NULL,
+  `experience_title` varchar(64),
+  `experience_employer` varchar(64),
+  `experience_date_started` varchar(32),
+  `experience_dete_ended` varchar(32),
+  `experience_location` varchar(64),
+  `experience_description` varchar(512),
+  `experience_profile_id` INTEGER NOT NULL,
+  FOREIGN KEY(experience_profile_id) REFERENCES profiles(profile_id)
+)
+""")
