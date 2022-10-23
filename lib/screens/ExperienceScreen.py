@@ -1,6 +1,5 @@
+
 from os import system
-import sys
-from lib.User import User
 from lib.Experience import Experience
 
 class ExperienceScreen:
@@ -16,10 +15,9 @@ class ExperienceScreen:
         print("Press \"3\" to go back")
         selection = input("Make a selection:")
         if selection == "1":
-            print("add experience")
             self.addExperience()
         elif selection == "2":
-            print("remove experience")
+            self.removeExperience()
         else:
             # return None returns control flow to wherever ExperienceScreen.render() was called from
             return None
@@ -44,3 +42,23 @@ class ExperienceScreen:
         experience.create(title, employer, dateStarted, dateEnded, location, description)
         self.render()
 
+    def removeExperience(self):
+        print("Select an experience to delete")
+        experience = Experience(self.profileId)
+        if(experience.getCount() == 0):
+            print("You do not have any experiences added profile and can therefore not delete any")
+            input("Press any key to continue...")
+            return self.render()
+        experiences = experience.getMany()
+        i = 1
+        for experienceElem in experiences:
+            print("[" + str(i) + "]", experienceElem[1], "@", experienceElem[2])
+            i += 1
+        print("Press 0 to go back")
+        selection = int(input("Make a selection: "))
+        if selection != 0:
+            experienceIdToDelete = experiences[selection - 1][0]
+            print("experienceIdToDelete: ", experienceIdToDelete)
+            experience.removeOne(experienceIdToDelete)
+        self.render()
+            
