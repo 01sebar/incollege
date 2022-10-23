@@ -14,7 +14,7 @@ class Friend:
             INNER JOIN users ON user_id=friend_to_user_id
             WHERE friend_from_user_id = ? AND friend_is_invite = 0""",
             (self.userId, ))
-        friends = res.fetchmany()
+        friends = res.fetchall()
         return friends
 
     def sendInvite(self, userToInviteID):
@@ -35,7 +35,7 @@ class Friend:
             INNER JOIN users ON user_id=friend_from_user_id
             WHERE friend_to_user_id = ? AND friend_is_invite = 1""",
             (self.userId, ))
-        friends = res.fetchmany()
+        friends = res.fetchall()
         return friends
 
     def addFriend(self, friendKey):
@@ -69,5 +69,5 @@ class Friend:
             INNER JOIN users ON user_id=friend_from_user_id
             WHERE friend_to_user_id = ? AND friend_is_invite = 0""",
             (self.userId, ))
-        friends = res.fetchmany()
+        friends = res.fetchall()
         return friends
