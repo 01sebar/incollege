@@ -9,6 +9,7 @@ class ProfileScreen:
         self.loggedInUser = loggedInUser
     
     def render(self):
+        system('clear')
         profile = Profile(self.loggedInUser)
         if profile.exists():
             self.view()
