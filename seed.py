@@ -66,8 +66,8 @@ DROP TABLE IF EXISTS `profiles`;
 cur.execute("""
 CREATE TABLE `profiles` (
   `profile_id` INTEGER PRIMARY KEY NOT NULL,
-  `profile_title` varchar(32) NOT NULL,
-  `profile_description` varchar(512) NOT NULL,
+  `profile_title` varchar(32),
+  `profile_description` varchar(512),
   `profile_user_id` INTEGER NOT NULL,
   FOREIGN KEY(profile_user_id) REFERENCES users(user_id)
 )
