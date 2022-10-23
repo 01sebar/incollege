@@ -1,3 +1,4 @@
+from select import select
 from traceback import print_tb
 from lib.User import User
 from lib.Profile import Profile
@@ -18,13 +19,36 @@ class ProfileScreen:
         print("You do not have a profile, would you like to create one?")
         print("Press \"1\" for Yes")
         print("Press \"2\" for No")
-        selection = input()
+        selection = input("Select an option:")
         if selection == "1":
-            self.create()
+            self.createOrUpdate()
         else:
             return None
             
-    def create(self):
-        print("create profile")
-        input("")
+    def createOrUpdate(self):
+        profile = Profile(self.loggedInUser)
+        if(not profile.exists()):
+            profile.create()
+        print("Press \"1\" to set Title")
+        print("Press \"2\" to set Major")
+        print("Press \"3\" to set University")
+        print("Press \"4\" to set Description")
+        print("Press \"5\" to set Experience")
+        print("Press \"6\" to set Education")
+        print("Press \"7\" to go back")
+        select = input("Select an option:")
+        if select == 1:
+            print("title")
+        elif select == 2:
+            print("major")
+        elif select == 3:
+            print("university")
+        elif select == 4:
+            print("description")
+        elif select == 5:
+            print("experience")
+        elif select == 6:
+            print("education")
+        elif select == 7:
+            self.doesNotExist()
 
