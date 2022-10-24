@@ -88,4 +88,21 @@ CREATE TABLE `experiences` (
   `experience_profile_id` INTEGER NOT NULL,
   FOREIGN KEY(experience_profile_id) REFERENCES profiles(profile_id)
 )
+<<<<<<< Updated upstream
 """)
+=======
+""")
+cur.execute("""
+DROP TABLE IF EXISTS `educations`;
+""")
+cur.execute("""CREATE TABLE `educations` (
+  `education_id` INTEGER PRIMARY KEY NOT NULL,
+  `edu_schoolName` varchar(64),
+  `edu_degree` varchar(64),
+  `edu_startingYear` varchar(32),
+  `edu_endingYear` varchar(32),
+  `education_profile_Id` INTEGER NOT NULL,
+  FOREIGN KEY(education_profile_id) REFERENCES profiles(profile_id)
+)
+""")
+>>>>>>> Stashed changes

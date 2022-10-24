@@ -3,6 +3,8 @@ from os import system
 from traceback import print_tb
 from lib.User import User
 from lib.Profile import Profile
+from lib.Education import Education
+from lib.Experience import Experience
 from lib.screens.ExperienceScreen import ExperienceScreen
 
 class ProfileScreen:
@@ -20,7 +22,53 @@ class ProfileScreen:
     
     def view(self):
         # TO-DO: IN-60
+<<<<<<< Updated upstream
         print("print out profile info")
+=======
+        print("print out profile info\n")
+        
+        i = 1 #counter for education
+        j = 1 #counter for workExperience 
+        #getting User info for Major and University name
+        tempU = User(None)
+        user = tempU.findOne(self.loggedInUser.userId)
+
+        #getting Profile information 
+        tempP = Profile(None)
+        profile = tempP.findOne(self.loggedInUser.userId)
+
+        #getting Education information 
+        tempEdu = Education(self.loggedInUser.userId)
+        profileEdu = tempEdu.getMany()
+
+        #getting Previous Work Experience
+        tempExp = Experience(self.loggedInUser.userId)
+        workExp = tempExp.getMany()
+
+        if profile[1] != None:
+            print("Title:",profile[1])
+
+        if user[5]!= "":
+            print("Major: ",user[5])
+
+        if user[4] != "":
+            print("University Name: ",user[4])
+    
+        if profile[2] != None:
+            print("About me: ",profile[2])
+
+        if profileEdu:
+            print("Previous Education:")
+            for educationElem in profileEdu:
+                print("     [Institution #" + str(i) + "]  Name:", educationElem[1], ", Major:", educationElem[2],", Years Attended:", educationElem[3],"-",educationElem[4])
+                i += 1
+        if workExp:
+            print("Previous Work Experience:")
+            for job in workExp:
+                print("     [Job #" + str(j) + "]  Job:", job[1], ", Employer:", job[2],", Date Started:", job[3],", Date Ended:",job[4], ", Location:",job[5], ", Description:",job[6])
+                j += 1
+
+>>>>>>> Stashed changes
         print("Press \"1\" to edit")
         print("Press \"2\" to go back")
         selection = input("Select an option: ")

@@ -50,6 +50,17 @@ class Profile:
             (description, self.loggedInUser.getUserId()))
         con.commit()
     
+    def findOne(self, p_userId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT profile_Id, profile_title, profile_description FROM profiles WHERE profile_user_id = ? LIMIT 1",
+            (p_userId, ))
+        profile = res.fetchone()
+        #con.close()
+        return profile
+
+    
     def setMajor(self, major: str):
         self.loggedInUser.updateMajor(major)
 
