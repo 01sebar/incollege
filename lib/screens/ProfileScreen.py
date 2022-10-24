@@ -6,6 +6,7 @@ from lib.Profile import Profile
 from lib.Education import Education
 from lib.Experience import Experience
 from lib.screens.ExperienceScreen import ExperienceScreen
+from lib.screens.EducationScreen import EducationScreen
 
 class ProfileScreen:
 
@@ -21,12 +22,8 @@ class ProfileScreen:
             self.doesNotExist()
     
     def view(self):
-        # TO-DO: IN-60
-<<<<<<< Updated upstream
-        print("print out profile info")
-=======
-        print("print out profile info\n")
-        
+       
+        print("~~Profile~~\n")
         i = 1 #counter for education
         j = 1 #counter for workExperience 
         #getting User info for Major and University name
@@ -67,8 +64,6 @@ class ProfileScreen:
             for job in workExp:
                 print("     [Job #" + str(j) + "]  Job:", job[1], ", Employer:", job[2],", Date Started:", job[3],", Date Ended:",job[4], ", Location:",job[5], ", Description:",job[6])
                 j += 1
-
->>>>>>> Stashed changes
         print("Press \"1\" to edit")
         print("Press \"2\" to go back")
         selection = input("Select an option: ")
@@ -118,7 +113,7 @@ class ProfileScreen:
         elif select == "5":
             ExperienceScreen(profile.getProfileId()).render()
         elif select == "6":
-            print("education")
+            EducationScreen(profile.getProfileId()).render()
         elif select == "7":
             return self.view()
         self.createOrUpdate()

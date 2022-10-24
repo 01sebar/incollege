@@ -42,7 +42,7 @@ class EducationScreen:
         educationList = education.getMany()
         i = 1
         for educationElem in educationList:
-            print("[" + str(i) + "]", educationElem[1], ":", educationElem[2],"Years:", educationElem[3],",",educationElem[4])
+            print("[" + str(i) + "]", educationElem[1], ", Major:", educationElem[2],"Years:", educationElem[3],",",educationElem[4])
             i += 1
         print("Press 0 to go back")
         selection = int(input("Make a selection: "))

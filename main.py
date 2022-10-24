@@ -146,9 +146,7 @@ def sendFriendInviteScreen(loggedInUser: User, users):
 def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
-    friendsListOut = friend.findMyFriends()
-    friendsListIn = friend.getFriends()
-    friendsList = friendsListOut + friendsListIn
+    friendsList = friend.getFriends()
     if not friendsList: 
         print("There is no one in your network...\n")
         input("\tPress any key to return to options screen\n")
@@ -161,15 +159,28 @@ def showMyNetworkScreen(loggedInUser: User):
     friendToDecide = int(input("Select a friend or 0 to return to options\n"))
     if friendToDecide == 0:
         optionsScreen(loggedInUser)
-    print("Would you like to remove this friend?")
-    print("1: Yes")
-    print("2: No")
-    answer = int(input())
-    if answer == 1:
-        friendId = friendsList[friendToDecide-1][0]
-        friend.removeFriend(friendId)
-        optionsScreen(loggedInUser)
-    elif answer == 2:
+    print("Press 1 to view friend profile")
+    print("Press 2 to remove")
+    selection = input("")
+    if selection == 1:
+        #profile
+        friendUserId = friend.getFriendsUserID(friendsList[friendToDecide-1][0])
+        print(friendUserId[0])
+        profileScreen = ProfileScreen(friendUserId[0])
+        profileScreen.render()
+        
+    elif selection ==2: 
+        print("Are you sure you want to remove this friend?")
+        print("1: Yes")
+        print("2: No")
+        answer = int(input())
+        if answer == 1:
+            friendId = friendsList[friendToDecide-1][0]
+            friend.removeFriend(friendId)
+            optionsScreen(loggedInUser)
+        elif answer == 2:
+            optionsScreen(loggedInUser)
+    else:
         optionsScreen(loggedInUser)
 
 

@@ -88,9 +88,6 @@ CREATE TABLE `experiences` (
   `experience_profile_id` INTEGER NOT NULL,
   FOREIGN KEY(experience_profile_id) REFERENCES profiles(profile_id)
 )
-<<<<<<< Updated upstream
-""")
-=======
 """)
 cur.execute("""
 DROP TABLE IF EXISTS `educations`;
@@ -105,4 +102,3 @@ cur.execute("""CREATE TABLE `educations` (
   FOREIGN KEY(education_profile_id) REFERENCES profiles(profile_id)
 )
 """)
->>>>>>> Stashed changes

@@ -67,7 +67,16 @@ class Friend:
         res = cur.execute(
             """SELECT friend_id, user_id, user_firstname, user_lastname FROM friends
             INNER JOIN users ON user_id=friend_from_user_id
-            WHERE friend_to_user_id = ? AND friend_is_invite = 0""",
-            (self.userId, ))
+            WHERE friend_to_user_id = ? OR friend_from_user_id = ? AND friend_is_invite = 0""",
+            (self.userId, self.userId))
         friends = res.fetchall()
         return friends
+        
+    def getFriendsUserID(self, friendId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            """SELECT friend_to_user_id FROM friends WHERE friend_id = ? """,
+            (friendId, ))
+        friend = res.fetchone()
+        return friend
