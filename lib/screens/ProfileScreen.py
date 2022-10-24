@@ -17,29 +17,42 @@ class ProfileScreen:
         system('clear')
         profile = Profile(self.loggedInUser)
         if profile.exists():
-            self.view()
+            self.view(self.loggedInUser.getUserId())
+            print("Press \"1\" to edit")
+            print("Press \"2\" to go back")
+            selection = input("Select an option: ")
+            if selection == "1":
+                self.createOrUpdate()
+            elif selection == "2":
+                # return None returns control flow to wherever ProfileScreen was called from (likely main)
+                return None
         else:
             self.doesNotExist()
-    
-    def view(self):
-       
+
+    def renderFriend(self, friendUserId):
+        system('clear')
+        self.view(friendUserId)
+        selection = input("Press any key to return to friends list...")
+        return None
+
+    def view(self, userId):
         print("~~Profile~~\n")
         i = 1 #counter for education
         j = 1 #counter for workExperience 
         #getting User info for Major and University name
         tempU = User(None)
-        user = tempU.findOne(self.loggedInUser.userId)
+        user = tempU.findOne(userId)
 
         #getting Profile information 
         tempP = Profile(None)
-        profile = tempP.findOne(self.loggedInUser.userId)
+        profile = tempP.findOne(userId)
 
         #getting Education information 
-        tempEdu = Education(self.loggedInUser.userId)
+        tempEdu = Education(userId)
         profileEdu = tempEdu.getMany()
 
         #getting Previous Work Experience
-        tempExp = Experience(self.loggedInUser.userId)
+        tempExp = Experience(userId)
         workExp = tempExp.getMany()
 
         if profile[1] != None:
@@ -64,14 +77,6 @@ class ProfileScreen:
             for job in workExp:
                 print("     [Job #" + str(j) + "]  Job:", job[1], ", Employer:", job[2],", Date Started:", job[3],", Date Ended:",job[4], ", Location:",job[5], ", Description:",job[6])
                 j += 1
-        print("Press \"1\" to edit")
-        print("Press \"2\" to go back")
-        selection = input("Select an option: ")
-        if selection == "1":
-            self.createOrUpdate()
-        elif selection == "2":
-            # return None returns control flow to wherever ProfileScreen was called from (likely main)
-            return None
 
 
     def doesNotExist(self):

@@ -159,29 +159,32 @@ def showMyNetworkScreen(loggedInUser: User):
     friendToDecide = int(input("Select a friend or 0 to return to options\n"))
     if friendToDecide == 0:
         optionsScreen(loggedInUser)
-    print("Press 1 to view friend profile")
-    print("Press 2 to remove")
+    print("Press 1 to remove")
+    friendUserId = friend.getFriendsUserID(friendsList[friendToDecide-1][0])
+    friendHasProfile = friend.hasProfile(friendUserId)
+    if friendHasProfile:
+        print("Press 2 to view friend profile")
+    print("Press 0 to go back")
     selection = input("")
-    if selection == 1:
-        #profile
-        friendUserId = friend.getFriendsUserID(friendsList[friendToDecide-1][0])
-        print(friendUserId[0])
-        profileScreen = ProfileScreen(friendUserId[0])
-        profileScreen.render()
-        
-    elif selection ==2: 
+    if selection == "1":
         print("Are you sure you want to remove this friend?")
         print("1: Yes")
         print("2: No")
-        answer = int(input())
-        if answer == 1:
+        answer = input()
+        if answer == "1":
             friendId = friendsList[friendToDecide-1][0]
             friend.removeFriend(friendId)
             optionsScreen(loggedInUser)
-        elif answer == 2:
+        else:
             optionsScreen(loggedInUser)
+    elif selection == "2" and friendHasProfile: 
+        #profile
+        profileScreen = ProfileScreen(loggedInUser)
+        profileScreen.view(friendUserId)
+        input("Press any key to return to view my network screen...")
+        showMyNetworkScreen(loggedInUser)
     else:
-        optionsScreen(loggedInUser)
+        showMyNetworkScreen(loggedInUser)
 
 
 
