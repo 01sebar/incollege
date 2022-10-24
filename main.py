@@ -154,6 +154,9 @@ def showMyNetworkScreen(loggedInUser: User):
     else:
         i = 1 
         for myFriend in friendsList:
+            # Prevents displaying of self
+            if(myFriend[1] == loggedInUser.getUserId()):
+                continue
             print(str(i), ":", myFriend[2], myFriend[3])
             i += 1
     friendToDecide = int(input("Select a friend or 0 to return to options\n"))
