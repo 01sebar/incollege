@@ -1,0 +1,428 @@
+commit abc82abaee7a35b46a678dccf6fed46c95082880
+Author: Gianni Rivera <70730828+giannirivera@users.noreply.github.com>
+Date:   Sun Oct 23 23:50:41 2022 -0400
+
+    IN-70 Fixed issue of displaying loggedInUser as a friend of oneself
+
+commit 65378c5208fec3b745dd475daa11051a79b626e1
+Author: Gianni Rivera <70730828+giannirivera@users.noreply.github.com>
+Date:   Sun Oct 23 23:44:12 2022 -0400
+
+    IN-70 Implemented view profile of a friend via showMyNetwork screen
+
+commit 60cc4679d06aff89fc88935c06b81f9f83e10e2f
+Author: Gianni Rivera <70730828+giannirivera@users.noreply.github.com>
+Date:   Sun Oct 23 22:50:46 2022 -0400
+
+    IN-70 education screen
+    
+    this is up to date
+    correctly displaying network screen
+
+commit 9bc744cd6d58b0562e40b5f24fed7c6f9298b1a2
+Author: Gianni Rivera <70730828+giannirivera@users.noreply.github.com>
+Date:   Sun Oct 23 20:53:55 2022 -0400
+
+    IN-65 education screen
+    
+    fixed more errors
+    and finished the 'view my profile ' option
+
+commit d680d004e690d2f32ddf3209231ff86ca303a4ed
+Author: Gianni Rivera <70730828+giannirivera@users.noreply.github.com>
+Date:   Sun Oct 23 16:18:46 2022 -0400
+
+    IN-60 edited User.findOne and main.signup()
+    
+     Removed adding  'university' and 'major' when creating an account so that a user can do that in the profile screen
+    And edited User.findOne so that 'university' and 'major' can be displayed
+
+commit 86050a95fa1b4344fc88a8c3aab34b4803445511
+Merge: e7e295a d58fa06
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Sat Oct 22 23:44:20 2022 -0400
+
+    Merge pull request #22 from 01sebar/IN-63
+    
+    In 63
+
+commit d58fa063e29549e5c2ea1adb82c626036b2b3662
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 23:43:59 2022 -0400
+
+    IN-63 Refactored incorrect call of res.fetchmany to res.fetchall
+
+commit 1fc2328b106d0eb9da316474849fa2ae521ab8b4
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 23:43:42 2022 -0400
+
+    IN-63 Implemented remove experience feature
+
+commit dec013f4fa992b0612892dc855795f36683278e2
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 23:01:36 2022 -0400
+
+    IN-63 Implemented add experience functionaliy
+
+commit 235522e71995e85952ac9045340515f4a41cee98
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 22:34:05 2022 -0400
+
+    IN-64 boilerplate ExperienceScreen
+
+commit c19bbe3c8f98507c7c008ddcbeee247596820e38
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 22:32:02 2022 -0400
+
+    IN-63 Implemented design for experiences table with a relationship of  `profiles` one-to-many `experiences`
+
+commit e7e295a6759273e21e4c928337c9abc56981345c
+Merge: 85d6d4d 325860b
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Sat Oct 22 22:11:56 2022 -0400
+
+    Merge pull request #21 from 01sebar/IN-74
+    
+    In 74
+
+commit 325860b1e6b71b56ccc2490f953a2d9b6481ed74
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 22:10:03 2022 -0400
+
+    IN-74 Implemented Profile update title, major, university, and description functionality. TODO: Implement education and experience portions of a profile
+
+commit d52ec9f82b5a2e095b74e5378edd997f0b0fda31
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:32:44 2022 -0400
+
+    IN-74 Implemented initial ProfileScreen.createOrUpdate() method skeleton
+
+commit dd2ce498763d7b1c9be62adb435b64822564a9ad
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:32:14 2022 -0400
+
+    IN-74 Implemented Profile.create method, TODO Education.create() default with user_university and user_major
+
+commit 2e4745dbe703085cfdb8d013f2c558860cce0465
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:29:42 2022 -0400
+
+    IN-74 stop tracking incollege.db
+
+commit 7308cac4541bbab1f95cfee85d4cea8e3884aeba
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:29:10 2022 -0400
+
+    IN-74 Removed required attribute from profile title and description fields
+
+commit 85d6d4d29246ef17385f77b3f69356a24a3d0ec1
+Merge: 1a0f893 d27aea7
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Sat Oct 22 21:10:37 2022 -0400
+
+    Merge pull request #19 from 01sebar/IN-59
+    
+    In 59
+
+commit d27aea72ff089aafa4faa672ddb49a617e91c5b4
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:10:08 2022 -0400
+
+    IN-52 Created ProfileScreen class to better divide screens into sub-files
+
+commit e1bfef448e29d7831ea8fa33391eab6e42bd713f
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:09:23 2022 -0400
+
+    IN-59 Create Profile class with exists() method to check if a user has a profile
+
+commit 7bc9d2cf015860a0c6b40bf8fa38c404ee947557
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:08:56 2022 -0400
+
+    IN-59 Added incollege.db to .gitignore
+
+commit b4c219e58c633faed87e56c67be7d516b021f41c
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 22 21:05:22 2022 -0400
+
+    IN-59 Updated .gitignore to ignore pycache
+
+commit 1a0f893f3f9175581e70d62e2b7ed4a0449b9ed1
+Merge: b8dbc29 ac88a99
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Mon Oct 17 00:56:49 2022 -0400
+
+    Merge pull request #17 from 01sebar/IN-58
+    
+    In 58
+
+commit ac88a996f45041f9a3b5c3425409b709e71ac9f7
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Mon Oct 17 00:55:31 2022 -0400
+
+    Implemented pytest to validate correct friend invite and accept features
+
+commit afb52de2be4f91b84c4eb4c469c49b5f6d74449f
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Mon Oct 17 00:55:03 2022 -0400
+
+    Updated User.create method to pass along correct number of params
+
+commit b8dbc2990bd232c4674a6f1b242c97bbd6cdf4e2
+Merge: c749b05 4d2fea5
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Sun Oct 16 00:02:46 2022 -0400
+
+    Remove friend feature
+    
+    remove friends feature
+
+commit 4d2fea5e97cb6d0bd32df52972bbef960b08f69c
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Sun Oct 16 00:01:35 2022 -0400
+
+    Remove friend feature
+
+commit 83bc7dd9d34627fd7be3d3a988175759377fd78d
+Author: Sebastian Rivera <sebastianriv@usf.edu>
+Date:   Sat Oct 15 22:55:15 2022 -0400
+
+    Created Friend.deleteOne() method to delete a friend relationship, used in removeFriend and rejectInvite methods
+
+commit 0cb2570fde567b2f15a8fa45d2f56834501f171d
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Sat Oct 15 22:06:50 2022 -0400
+
+    WIP, remove friends feature
+
+commit c749b056449e55a52eb0351c7a19e4b6822b11f5
+Merge: 49e4e85 0e77b01
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Sat Oct 15 21:11:50 2022 -0400
+
+    Merge pull request #15 from 01sebar/IN-52
+    
+    Accepted requests show in network for both users
+
+commit 0e77b010f6e5f13fb0c08d226ba10f9548f02b87
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Sat Oct 15 21:11:15 2022 -0400
+
+    Accepted requests show in network for both users
+
+commit 49e4e851d47cd2e2bb3d54d6d3b541494f233893
+Merge: 66df28c 31d032c
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Sat Oct 15 20:52:57 2022 -0400
+
+    Merge pull request #14 from 01sebar/IN-51
+    
+    Added ability to accept/reject invites
+
+commit 31d032c9e1ca1e235d9928de8a4690dfc958f5ef
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Sat Oct 15 20:49:51 2022 -0400
+
+    Added ability to accept/reject invites
+
+commit 66df28cd511e30bc6bf3cc4c4386809d607a5596
+Merge: c993de0 98d3ad3
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Sat Oct 15 19:17:34 2022 -0400
+
+    Merge pull request #12 from 01sebar/IN-50
+    
+    Minor changes, WIP
+
+commit 98d3ad34dada776377c8823d9e99476b46eee64a
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Sat Oct 15 19:16:57 2022 -0400
+
+    Minor changes, WIP
+
+commit c993de0c9d06c2cb82746e688432cc17b65bcd85
+Merge: 3481f17 7ed91ff
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Fri Oct 14 19:58:50 2022 -0400
+
+    Merge pull request #10 from 01sebar/IN-50
+    
+    Added accept/reject any connection request
+
+commit 7ed91ffcecbe0cf555491b5ed0ef661b3d6bc114
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Fri Oct 14 19:56:42 2022 -0400
+
+    Added accept/reject any connection request
+
+commit 2034f239c32f519e4c9ea62439d4740d8134f253
+Merge: ce6c109 4031a61
+Author: Jubbery <86797076+Jubbery@users.noreply.github.com>
+Date:   Fri Oct 14 19:31:57 2022 -0400
+
+    Merge pull request #9 from 01sebar/IN-55
+    
+    Added empty show my network message
+
+commit 4031a616e58a68cb6cb6b7b2a33d3424ee7c324b
+Author: Jubbery <jackroberts28077@gmail.com>
+Date:   Fri Oct 14 19:30:22 2022 -0400
+
+    Added empty show my network message
+
+commit ce6c1095713bf248132172c7414f5cd382fd95bb
+Merge: 4e8ff8a d2c14a3
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 18:52:11 2022 -0400
+
+    Merge pull request #8 from 01sebar/IN-49
+    
+    Implemented notice to optionsScreen with information about pending fr…
+
+commit d2c14a3c454527e0c865bae8494c0bf516585a1f
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:51:56 2022 -0400
+
+    Implemented notice to optionsScreen with information about pending friend invites, also added option to go to acceptInvitesScreen()
+
+commit 4e8ff8ad6703dcbd2190af14a091b3b2e2fc6203
+Merge: 3481f17 5d2acd3
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 18:34:55 2022 -0400
+
+    Merge pull request #7 from 01sebar/IN-48
+    
+    Implemented friend.sendInvite method to store friend relation in DB w…
+
+commit 5d2acd31f4ba92ba055db8e08defea6afa55a408
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:34:36 2022 -0400
+
+    Implemented friend.sendInvite method to store friend relation in DB with friend_is_invite field set to true (1)
+
+commit 3481f170e5837ddaf8189bbbe419ed790087095d
+Merge: 073bc60 fbaec54
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 18:18:18 2022 -0400
+
+    Merge pull request #6 from 01sebar/IN-47
+    
+    In 47
+
+commit fbaec54e730d316562ea2c98612f35206f3568d1
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:18:03 2022 -0400
+
+    Implemented search by major feature to "Find Someone you Know" screen
+
+commit 14956bb6d7220bd126fa0fa4245d055a2d0cd100
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:13:22 2022 -0400
+
+    Implemented new `user_major` field for `user` model to store information about a user's major
+
+commit 04b6d2a9b6df50bfe8a91a52efa680dba75912c3
+Merge: 5f3d852 faaae65
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 18:10:17 2022 -0400
+
+    Merge pull request #5 from 01sebar/IN-46
+    
+    In 46
+
+commit faaae6545dff737c3a0a75b67c21b5cdcb1a7baa
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:09:54 2022 -0400
+
+    Implemented search by university feature
+
+commit ac5dc83d5b099a1c6ad6fbebd7140619f6c28dbf
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 18:06:34 2022 -0400
+
+    Implemented new `university` field to `user` model
+
+commit 5f3d852296b4f119f95d1731170ef6ba3cb170ed
+Merge: e2aacd4 2101ed2
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 17:59:21 2022 -0400
+
+    Merge pull request #4 from 01sebar/IN-45
+    
+    Implemented seach by lastname functionality via findSomeoneScreen() >…
+
+commit 2101ed2edbd8ebd1d1c2d15fae3d5b3de0d73050
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 17:59:00 2022 -0400
+
+    Implemented seach by lastname functionality via findSomeoneScreen() > findSomeoneByLastNameScreen()
+
+commit e2aacd4116c1c57cf5be4c029eaf6fc0dca2bb6d
+Merge: d8e218a b791ba8
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 17:26:28 2022 -0400
+
+    Merge pull request #3 from 01sebar/IN-54
+    
+    In 54
+
+commit b791ba806f6467ab11b6324bc44a0891dd22d025
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 17:26:07 2022 -0400
+
+    IN-54 Created initial showMyNetworkScreen method to list all of a loggedInUser's friends, TODO: allow user to exit and return to optionsScreen
+
+commit e864c47497b209f5854a52d6f47d5b39726d18d6
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 17:24:10 2022 -0400
+
+    Fixed typo from `friends_is_invite` to `friend_is_invite` (removed incorrect "s" at the end of "friend")
+
+commit 832348ab64c1c83f88856b01ab531ab58037fc26
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 17:23:32 2022 -0400
+
+    Created Friend class with findMyFriends method to return list of friends for a user
+
+commit 03011d35a91fa532c92819e7f40ad7c44e08de1a
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 16:57:41 2022 -0400
+
+    Created `friends` table to store relations of user friendships
+
+commit d8e218ac1c3ba5496889c4add6edb5e5b857bce4
+Merge: 1035f8e 05ba196
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 16:46:49 2022 -0400
+
+    Merge pull request #2 from 01sebar/IN-57
+    
+    Increased limit of allowed user accounts from 5 to 10
+
+commit 05ba1967a1fa774e0b48c96b83d288c5d2f275c5
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 16:46:22 2022 -0400
+
+    Increased limit of allowed user accounts from 5 to 10
+
+commit 073bc605fe9963ab92d2240e39c5bb5da13a1a2e
+Merge: 1434083 1035f8e
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 16:28:55 2022 -0400
+
+    Merge pull request #1 from 01sebar/develop
+    
+    initial commit
+
+commit 1035f8eecf6d7ae5b7fba56471159cff015c2912
+Author: Sebastian Rivera <sebastianr@myprot.net>
+Date:   Fri Oct 14 16:28:15 2022 -0400
+
+    initial commit
+
+commit 1434083d40ebf4bb45af6c199eb7193e4240604d
+Author: 01sebar <113564464+01sebar@users.noreply.github.com>
+Date:   Fri Oct 14 16:23:40 2022 -0400
+
+    Create README.md

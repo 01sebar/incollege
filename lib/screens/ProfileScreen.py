@@ -55,6 +55,12 @@ class ProfileScreen:
         tempExp = Experience(userId)
         workExp = tempExp.getMany()
 
+        if user[2]!= "":
+            print("First name: ",user[2])
+        
+        if user[3]!= "":
+            print("Last name: ",user[3])
+
         if profile[1] != None:
             print("Title:",profile[1])
 
@@ -70,12 +76,12 @@ class ProfileScreen:
         if profileEdu:
             print("Previous Education:")
             for educationElem in profileEdu:
-                print("     [Institution #" + str(i) + "]  Name:", educationElem[1], ", Major:", educationElem[2],", Years Attended:", educationElem[3],"-",educationElem[4])
+                print("\t[Institution #" + str(i) + "]  Name:", educationElem[1], ", Major:", educationElem[2],", Years Attended:", educationElem[3],"-",educationElem[4])
                 i += 1
         if workExp:
             print("Previous Work Experience:")
             for job in workExp:
-                print("     [Job #" + str(j) + "]  Job:", job[1], ", Employer:", job[2],", Date Started:", job[3],", Date Ended:",job[4], ", Location:",job[5], ", Description:",job[6])
+                print("\t[Job #" + str(j) + "]  Job:", job[1], ", Employer:", job[2],", Date Started:", job[3],", Date Ended:",job[4], ", Location:",job[5], ", Description:",job[6])
                 j += 1
 
 
