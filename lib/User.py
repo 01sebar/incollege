@@ -32,6 +32,7 @@ class User:
     def findOneByUsername(self, username):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
+        #hi
         res = cur.execute(
             "SELECT user_id, user_username, user_password FROM users WHERE user_username = ? LIMIT 1",
             (username, ))
