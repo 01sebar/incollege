@@ -14,12 +14,12 @@ class User:
     def isLoggedIn(self):
         return self.userId != None
 
-    def create(self, username, password, firstname, lastname, university, major):
+    def create(self, username, password, firstname, lastname):
         firstname = firstname.lower()
         lastname = lastname.lower()
         format = Format()
-        university = format.titleCase(university)
-        major = format.titleCase(major)
+        university = ""
+        major = ""
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
@@ -32,6 +32,7 @@ class User:
     def findOneByUsername(self, username):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
+        #hi
         res = cur.execute(
             "SELECT user_id, user_username, user_password FROM users WHERE user_username = ? LIMIT 1",
             (username, ))
@@ -46,7 +47,7 @@ class User:
             # We use "LIKE" instead of "=" to potentially allow for better search results
             "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_lastname LIKE ?",
             (lastname, ))
-        users = res.fetchmany()
+        users = res.fetchall()
         return users
 
     def findManyByUniversity(self, university: str):
@@ -57,7 +58,7 @@ class User:
             # We use "LIKE" instead of "=" to potentially allow for better search results
             "SELECT user_id, user_firstname, user_lastname FROM users WHERE user_university LIKE ?",
             (university, ))
-        users = res.fetchmany()
+        users = res.fetchall()
         return users
 
     def findManyByMajor(self, major: str):
@@ -75,7 +76,7 @@ class User:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute(
-            "SELECT user_id, user_username, user_firstname, user_lastname FROM users WHERE user_id = ? LIMIT 1",
+            "SELECT user_id, user_username, user_firstname, user_lastname, user_university, user_major FROM users WHERE user_id = ? LIMIT 1",
             (userId, ))
         user = res.fetchone()
         return user

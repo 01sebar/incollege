@@ -1,5 +1,6 @@
 import sqlite3
-
+from lib.User import User
+from lib.Profile import Profile
 
 class Friend:
 
@@ -14,7 +15,7 @@ class Friend:
             INNER JOIN users ON user_id=friend_to_user_id
             WHERE friend_from_user_id = ? AND friend_is_invite = 0""",
             (self.userId, ))
-        friends = res.fetchmany()
+        friends = res.fetchall()
         return friends
 
     def sendInvite(self, userToInviteID):
@@ -35,7 +36,7 @@ class Friend:
             INNER JOIN users ON user_id=friend_from_user_id
             WHERE friend_to_user_id = ? AND friend_is_invite = 1""",
             (self.userId, ))
-        friends = res.fetchmany()
+        friends = res.fetchall()
         return friends
 
     def addFriend(self, friendKey):
@@ -66,8 +67,24 @@ class Friend:
         cur = con.cursor()
         res = cur.execute(
             """SELECT friend_id, user_id, user_firstname, user_lastname FROM friends
-            INNER JOIN users ON user_id=friend_from_user_id
-            WHERE friend_to_user_id = ? AND friend_is_invite = 0""",
-            (self.userId, ))
-        friends = res.fetchmany()
+            INNER JOIN users ON user_id = friend_from_user_id OR user_id = friend_to_user_id
+            WHERE friend_to_user_id = ? OR friend_from_user_id = ? AND friend_is_invite = 0""",
+            (self.userId, self.userId))
+        friends = res.fetchall()
         return friends
+
+    def getFriendsUserID(self, friendId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            """SELECT friend_from_user_id, friend_to_user_id FROM friends WHERE friend_id = ?""",
+            (friendId, ))
+        friend = res.fetchone()
+        if self.userId == friend[0]:
+            return friend[1]
+        return friend[0]
+    
+    def hasProfile(self, friendId):
+        tempUser = User(friendId)
+        tempProfile = Profile(tempUser)
+        return tempProfile.exists()
