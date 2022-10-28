@@ -16,3 +16,10 @@ class Job:
                       (jobId,))
           job = res.fetchone()
           return job
+    def findAll(self):
+          con = sqlite3.connect("incollege.db")
+          cur = con.cursor()
+          res = cur.execute("SELECT job_title, job_description, job_employer, job_location, job_salary, job_user_id FROM jobs WHERE job_id IS NOT NULL ",
+                      )
+          jobList = res.fetchall()
+          return jobList
