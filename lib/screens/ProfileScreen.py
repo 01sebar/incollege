@@ -54,12 +54,9 @@ class ProfileScreen:
         #getting Previous Work Experience
         tempExp = Experience(userId)
         workExp = tempExp.getMany()
-
-        if user[2]!= "":
-            print("First name: ",user[2])
         
-        if user[3]!= "":
-            print("Last name: ",user[3])
+        print("First name: ",user[2])
+        print("Last name: ",user[3])
 
         if profile[1] != None:
             print("Title:",profile[1])

@@ -14,9 +14,9 @@ def postJobScreen(loggedInUser):
     con = sqlite3.connect("incollege.db")
     cur = con.cursor()
     res = cur.execute("SELECT COUNT() FROM jobs")
-    userCount = res.fetchone()[0]
-    print("Number of jobs: " + str(userCount))
-    if (userCount >= 10):
+    jobCount = res.fetchone()[0]
+    print("Number of jobs: " + str(jobCount))
+    if (jobCount >= 10):
         print("\tReached limit on jobs posted.\n \tPlease come back later.\n")
         return None
     title = input("Enter the Title of the position you are posting: ")
