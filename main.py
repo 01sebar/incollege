@@ -7,7 +7,7 @@ from lib.Job import Job
 from lib.Setting import Setting
 from lib.Friend import Friend
 from lib.screens.ProfileScreen import ProfileScreen
-
+from lib.screens.JobScreen import jobScreen
 
 def postJobScreen(loggedInUser):
     clearConsole()
@@ -31,18 +31,21 @@ def postJobScreen(loggedInUser):
     job = Job()
     job.create(title, description, employer, location, salary,
                loggedInUser.getUserId())
-    jobScreen(loggedInUser)
+    jobScreenList(loggedInUser)
 
 
-def jobScreen(loggedInUser):
+def jobScreenList(loggedInUser):
     clearConsole()
+    jobscreen = jobScreen(loggedInUser)
     print("\n\tFind or post A Job\n")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
     print("press \"3\" to return to the options screen")
     selection = int(input())
     if selection == 1:
-        underConstructionScreen()
+        job=Job()
+        jobsList= job.findAll()
+        jobscreen.getTitleList(jobsList)
     elif selection == 2:
         postJobScreen(loggedInUser)
     elif selection == 3:
@@ -231,7 +234,7 @@ def optionsScreen(loggedInUser: User):
     selection = int(input("\t9: Log out\n"))
     clearConsole()
     if selection == 1:
-        jobScreen(loggedInUser)
+        jobScreenList(loggedInUser)
     elif selection == 2:
         findSomeoneScreen(loggedInUser)
     elif selection == 3:
