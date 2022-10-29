@@ -19,7 +19,14 @@ class Job:
     def findAll(self):
           con = sqlite3.connect("incollege.db")
           cur = con.cursor()
-          res = cur.execute("SELECT job_title, job_description, job_employer, job_location, job_salary, job_user_id FROM jobs WHERE job_id IS NOT NULL ",
+          res = cur.execute("SELECT job_id, job_title, job_description, job_employer, job_location, job_salary, job_user_id FROM jobs WHERE job_id IS NOT NULL ",
                       )
           jobList = res.fetchall()
           return jobList
+    def createApplication(self,graduationDate,startDate,aboutParagraph,userId,jobId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO jobsApplied (graduation_date,starting_date,about_paragraph,user_id,job_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    (graduationDate,startDate,aboutParagraph,userId,jobId))
+        con.commit()
+        return cur.lastrowid
