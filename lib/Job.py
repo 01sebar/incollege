@@ -23,6 +23,7 @@ class Job:
                       )
           jobList = res.fetchall()
           return jobList
+
     def createApplication(self,graduationDate,startDate,aboutParagraph,userId,jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -31,12 +32,14 @@ class Job:
                     (userId,jobId,graduationDate,startDate,aboutParagraph,status))
         con.commit()
         return cur.lastrowid
+
     def removeJob(self, jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute("""DELETE FROM jobs WHERE job_id = ?""", (jobId,))
         con.commit()
         return
+
     def addInterestedJob(self, userId, jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -44,6 +47,7 @@ class Job:
                     (userId, jobId))
         con.commit()
         return cur.lastrowid
+
     def hasApplied(self,jobId,userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -55,6 +59,7 @@ class Job:
             return True
         else: 
             return False
+
     def hasInterested(self,jobId,userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -66,6 +71,7 @@ class Job:
             return True
         else: 
             return False
+
     def findAllInterested(self, userId):
           con = sqlite3.connect("incollege.db")
           cur = con.cursor()
@@ -73,12 +79,14 @@ class Job:
                       (userId,))
           jobList = res.fetchall()
           return jobList
+
     def removeInterestedJob(self, jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute("""DELETE FROM jobsInterested WHERE job_id = ?""", (jobId,))
         con.commit()
         return
+
     def updateStatus(self, jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
@@ -87,6 +95,7 @@ class Job:
             "UPDATE jobsApplied SET status = ? WHERE job_id = ?",
             (newStatus, jobId))
         con.commit()
+        
     def checkStatus(self, user_id):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()

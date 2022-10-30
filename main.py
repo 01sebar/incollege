@@ -50,7 +50,7 @@ def jobScreenList(loggedInUser):
     selection = int(input())
     if selection == 1:
         jobsList= job.findAll()
-        jobscreen.getTitleList(jobsList)
+        jobscreen.jobTitleList(jobsList)
         jobScreenList(loggedInUser)
     elif selection == 2:
         postJobScreen(loggedInUser)
@@ -62,6 +62,7 @@ def jobScreenList(loggedInUser):
         deleteJob(loggedInUser)
     elif selection == 5:
         optionsScreen(loggedInUser)
+
 def deleteJob(loggedInUser):
     clearConsole()
     jobs = Job()
@@ -72,6 +73,7 @@ def deleteJob(loggedInUser):
                       (loggedInUser.getUserId(),))
     i = 1
     jobList = res.fetchall()
+
 
     if len(jobList) == 0:           #if no jobs are found in joblist return to job screen
         print("\nNo Jobs Found\n")
