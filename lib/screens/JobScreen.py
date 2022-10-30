@@ -18,10 +18,10 @@ class jobScreen:
         i = 1
         print("\nList of Jobs:")
         for job in jobList:         #for every job in joblist, print the job title
-            if self.hasApplied(job[0],self.loggedInUser.getUserId()) == True:
-                print("\t\u2611"+ str(i) + "-", job[1])
+            if self.hasApplied(job[0],self.loggedInUser.getUserId()) is True:
+                print("\t\u2611 has applied: "+ str(i) + "-", job[1])
             else:
-                print("\t\u2610"+ str(i) + "-", job[1])
+                print("\t\u2610 has not applied"+ str(i) + "-", job[1])
             i += 1
         
         print("Select a job to learn more about it:")
@@ -32,8 +32,9 @@ class jobScreen:
         else: # need to add a checker so the selection is not out of range 
             pickedJob = jobList[selection - 1]          #if user selects a job from joblist, call printPickedJob function that displays job info
             self.printPickedJob(pickedJob,jobList)
-        
-        if self.hasApplied(job[0],self.loggedInUser.getUserId()) == True: # checks if user has applied to job already
+
+        if self.hasApplied(pickedJob[0],self.loggedInUser.getUserId()) is True: # checks if user has applied to job already
+            print("check done work")
             return None #returns back to prev screen if user has already applied
         else: #allows user to apply if they have havent already done so 
             print("Press 1 to apply for this job\nPress 2 to go back to the list of jobs ")
@@ -76,13 +77,15 @@ class jobScreen:
 
 
 
-    def hasApplied(self,jobId,userID):
+    def hasApplied(self,jobId,userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute(
-            "SELECT job_id FROM jobsApplied WHERE user_id = ? LIMIT 1",
-            (userID))
-        jobIdList = res.fetchall()
-        if jobId in jobIdList: return True
-        else: return False
+            "SELECT user_id FROM jobsApplied WHERE job_id = ? AND user_id = ?",
+            (jobId,userId))
+        jobIdList = res.fetchone()
+        if jobIdList: 
+            return True
+        else: 
+            return False
         

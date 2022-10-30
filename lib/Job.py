@@ -27,6 +27,12 @@ class Job:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute("INSERT INTO jobsApplied (user_id,job_id,graduation_date,starting_date,about_paragraph) VALUES (?, ?, ?, ?, ?)",
-                    (userId,jobId,graduationDate,startDate,aboutParagraph))
+                    (userId,jobId,graduationDate,startDate,aboutParagraph,))
         con.commit()
         return cur.lastrowid
+    def removeJob(self, jobId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        cur.execute("""DELETE FROM jobs WHERE job_id = ?""", (jobId,))
+        con.commit()
+        return

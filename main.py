@@ -40,7 +40,8 @@ def jobScreenList(loggedInUser):
     print("\n\tFind or post A Job\n")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
-    print("press \"3\" to return to the options screen")
+    print("press \"3\" to delete a job posting")
+    print("press \"4\" to return to the options screen")
     selection = int(input())
     if selection == 1:
         job=Job()
@@ -50,7 +51,34 @@ def jobScreenList(loggedInUser):
     elif selection == 2:
         postJobScreen(loggedInUser)
     elif selection == 3:
+        deleteJob(loggedInUser)
+    elif selection == 4:
         optionsScreen(loggedInUser)
+def deleteJob(loggedInUser):
+    clearConsole()
+    jobs = Job()
+
+    con = sqlite3.connect("incollege.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT job_id, job_title FROM jobs WHERE job_user_id = ? ",
+                      (loggedInUser.getUserId(),))
+    i = 1
+    jobList = res.fetchall()
+
+    if len(jobList) == 0:           #if no jobs are found in joblist return to job screen
+        print("\nNo Jobs Found\n")
+        jobScreenList(loggedInUser)
+
+    for job in jobList:         #for every job in joblist, print the job title
+        print("["+ str(i) + "] ", job[1])
+        i += 1
+    selection = int(input("Select a job to delete:"))
+    jobToDelete = jobList[selection - 1]
+    jobs.removeJob(jobToDelete[0])
+    print("\nthingy deleted\n")
+    jobScreenList(loggedInUser)
+
+
 
 
 def findSomeoneScreen(loggedInUser):
