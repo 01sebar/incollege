@@ -14,10 +14,10 @@ class TestClass:
         user2 = User(None)
 
         user1.create("User1", "Password123!", "John",
-                     "Smith", "USF", "CompSci")
+                     "Smith")
 
         user2.create("user2", "Pass234!", "Jane",
-                     "Doe", "USF", "Computer Science")
+                     "Doe")
 
         user1.createDefaultSettings()
         user2.createDefaultSettings()
