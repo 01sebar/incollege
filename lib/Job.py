@@ -26,7 +26,7 @@ class Job:
     def createApplication(self,graduationDate,startDate,aboutParagraph,userId,jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO jobsApplied (graduation_date,starting_date,about_paragraph,user_id,job_id) VALUES (?, ?, ?, ?, ?, ?)",
-                    (graduationDate,startDate,aboutParagraph,userId,jobId))
+        cur.execute("INSERT INTO jobsApplied (user_id,job_id,graduation_date,starting_date,about_paragraph) VALUES (?, ?, ?, ?, ?)",
+                    (userId,jobId,graduationDate,startDate,aboutParagraph))
         con.commit()
         return cur.lastrowid

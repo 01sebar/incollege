@@ -46,6 +46,7 @@ def jobScreenList(loggedInUser):
         job=Job()
         jobsList= job.findAll()
         jobscreen.getTitleList(jobsList)
+        jobScreenList(loggedInUser)
     elif selection == 2:
         postJobScreen(loggedInUser)
     elif selection == 3:
