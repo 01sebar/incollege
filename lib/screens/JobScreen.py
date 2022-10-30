@@ -10,7 +10,7 @@ class jobScreen:
         self.loggedInUser = loggedInUser
     
 
-    def getTitleList(self, jobList):       #function to display list of jobs that user can pick from
+    def jobTitleList(self, jobList):       #function to display list of jobs that user can pick from
         if len(jobList) == 0:           #if no jobs are found in joblist return to job screen
             print("No Jobs Found")
             input("\tPress any key to return to the Job Screen\n")
@@ -45,11 +45,11 @@ class jobScreen:
                 selection = int(input())
                 if(selection == 1):
                     self.jobApplication(pickedJob)   #if the user selects 1, call the job application screen
-                    self.getTitleList(jobList)
+                    self.jobTitleList(jobList)
                     return None
                 if(selection == 2):
                     self.addjobInterested(pickedJob)   #if the user selects 1, call the job interested screen
-                    self.getTitleList(jobList)
+                    self.jobTitleList(jobList)
                     return None
                 elif(selection ==3):
                     return None      #if the user selects 2, go back to the job lists
@@ -70,7 +70,7 @@ class jobScreen:
         i = 1
         print("\nList of Interested Jobs:")
         for JOB in jobSavedList:         #for every job in joblist, print the job title
-            print("\t"+ str(i) + "  job title:", JOB[1])
+            print("\t["+ str(i) + "]  Job title:", JOB[1])
             i += 1
     
         print("\nSelect a job to remove from saved list")
@@ -88,7 +88,6 @@ class jobScreen:
         system('clear')
         if(pickedJob[6]==self.loggedInUser.getUserId()):            #checking if the user is the one who posted the job since they cannot apply for a job they posted
             print("You cannot apply for a job that you posted.")
-            #return None          #if the user is the one who posted the job, bring them back to the job list
         
         else:
             con = sqlite3.connect("incollege.db")
@@ -101,7 +100,6 @@ class jobScreen:
             newApplication.createApplication(graduationDate,startDate,aboutParagraph, userId, jobId)
             print("\nJob applied successfully\n")
             input("Press any key to return to the Job List Screen\n")
-            #return None
     
     def addjobInterested(self, pickedJob):
         system('clear')
