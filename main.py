@@ -37,27 +37,35 @@ def postJobScreen(loggedInUser):
 def jobScreenList(loggedInUser):
     clearConsole()
     jobscreen = jobScreen(loggedInUser)
+    job=Job()
+    userId = loggedInUser.getUserId()
     print("\n\tFind or post A Job\n")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
-    print("press \"3\" to delete a job posting")
-    print("press \"4\" to return to the options screen")
+    print("press \"3\" to view save later list")
+    print("press \"4\" to delete a job posting")
+    print("press \"5\" to return to the options screen")
+    if job.checkStatus(userId) == True:
+        print("A job you have applied for has been deleted")
     selection = int(input())
     if selection == 1:
-        job=Job()
         jobsList= job.findAll()
         jobscreen.getTitleList(jobsList)
         jobScreenList(loggedInUser)
     elif selection == 2:
         postJobScreen(loggedInUser)
     elif selection == 3:
-        deleteJob(loggedInUser)
+        jobSavedList = job.findAllInterested(userId)
+        jobscreen.jobInterestedScreen(jobSavedList)
+        jobScreenList(loggedInUser)
     elif selection == 4:
+        deleteJob(loggedInUser)
+    elif selection == 5:
         optionsScreen(loggedInUser)
 def deleteJob(loggedInUser):
     clearConsole()
     jobs = Job()
-
+    #getting all jobs posted by logged in user 
     con = sqlite3.connect("incollege.db")
     cur = con.cursor()
     res = cur.execute("SELECT job_id, job_title FROM jobs WHERE job_user_id = ? ",
@@ -67,6 +75,7 @@ def deleteJob(loggedInUser):
 
     if len(jobList) == 0:           #if no jobs are found in joblist return to job screen
         print("\nNo Jobs Found\n")
+        input("\tPress any key to return to the Job Screen\n")
         jobScreenList(loggedInUser)
 
     for job in jobList:         #for every job in joblist, print the job title
@@ -74,6 +83,7 @@ def deleteJob(loggedInUser):
         i += 1
     selection = int(input("Select a job to delete:"))
     jobToDelete = jobList[selection - 1]
+    jobs.updateStatus(jobToDelete[0]) # lets all the users who have applied know that the job is not avaiable anymore
     jobs.removeJob(jobToDelete[0])
     print("\nthingy deleted\n")
     jobScreenList(loggedInUser)

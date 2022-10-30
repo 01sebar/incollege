@@ -126,5 +126,5 @@ class ProfileScreen:
         elif select == "6":
             EducationScreen(profile.getProfileId()).render()
         elif select == "7":
-            return self.view()
+            return self.view(self.loggedInUser.getUserId())
         self.createOrUpdate()
