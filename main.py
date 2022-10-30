@@ -7,16 +7,16 @@ from lib.Job import Job
 from lib.Setting import Setting
 from lib.Friend import Friend
 from lib.screens.ProfileScreen import ProfileScreen
-
+from lib.screens.JobScreen import jobScreen
 
 def postJobScreen(loggedInUser):
     clearConsole()
     con = sqlite3.connect("incollege.db")
     cur = con.cursor()
     res = cur.execute("SELECT COUNT() FROM jobs")
-    userCount = res.fetchone()[0]
-    print("Number of jobs: " + str(userCount))
-    if (userCount >= 10):
+    jobCount = res.fetchone()[0]
+    print("Number of jobs: " + str(jobCount))
+    if (jobCount >= 10):
         print("\tReached limit on jobs posted.\n \tPlease come back later.\n")
         return None
     title = input("Enter the Title of the position you are posting: ")
@@ -31,22 +31,64 @@ def postJobScreen(loggedInUser):
     job = Job()
     job.create(title, description, employer, location, salary,
                loggedInUser.getUserId())
-    jobScreen(loggedInUser)
+    jobScreenList(loggedInUser)
 
 
-def jobScreen(loggedInUser):
+def jobScreenList(loggedInUser):
     clearConsole()
+    jobscreen = jobScreen(loggedInUser)
+    job=Job()
+    userId = loggedInUser.getUserId()
     print("\n\tFind or post A Job\n")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
-    print("press \"3\" to return to the options screen")
+    print("press \"3\" to view save later list")
+    print("press \"4\" to delete a job posting")
+    print("press \"5\" to return to the options screen")
+    if job.checkStatus(userId) == True:
+        print("1 or more jobs you have applied for have been deleted")
     selection = int(input())
     if selection == 1:
-        underConstructionScreen()
+        jobsList= job.findAll()
+        jobscreen.getTitleList(jobsList)
+        jobScreenList(loggedInUser)
     elif selection == 2:
         postJobScreen(loggedInUser)
     elif selection == 3:
+        jobSavedList = job.findAllInterested(userId)
+        jobscreen.jobInterestedScreen(jobSavedList)
+        jobScreenList(loggedInUser)
+    elif selection == 4:
+        deleteJob(loggedInUser)
+    elif selection == 5:
         optionsScreen(loggedInUser)
+def deleteJob(loggedInUser):
+    clearConsole()
+    jobs = Job()
+    #getting all jobs posted by logged in user 
+    con = sqlite3.connect("incollege.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT job_id, job_title FROM jobs WHERE job_user_id = ? ",
+                      (loggedInUser.getUserId(),))
+    i = 1
+    jobList = res.fetchall()
+
+    if len(jobList) == 0:           #if no jobs are found in joblist return to job screen
+        print("\nNo Jobs Found\n")
+        input("\tPress any key to return to the Job Screen\n")
+        jobScreenList(loggedInUser)
+
+    for job in jobList:         #for every job in joblist, print the job title
+        print("["+ str(i) + "] ", job[1])
+        i += 1
+    selection = int(input("Select a job to delete:"))
+    jobToDelete = jobList[selection - 1]
+    jobs.updateStatus(jobToDelete[0]) # lets all the users who have applied know that the job is not avaiable anymore
+    jobs.removeJob(jobToDelete[0])
+    print("\nthingy deleted\n")
+    jobScreenList(loggedInUser)
+
+
 
 
 def findSomeoneScreen(loggedInUser):
@@ -231,7 +273,7 @@ def optionsScreen(loggedInUser: User):
     selection = int(input("\t9: Log out\n"))
     clearConsole()
     if selection == 1:
-        jobScreen(loggedInUser)
+        jobScreenList(loggedInUser)
     elif selection == 2:
         findSomeoneScreen(loggedInUser)
     elif selection == 3:
