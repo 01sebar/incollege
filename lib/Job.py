@@ -26,7 +26,7 @@ class Job:
     def createApplication(self,graduationDate,startDate,aboutParagraph,userId,jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        status = 1
+        status =1
         cur.execute("INSERT INTO jobsApplied (user_id,job_id,graduation_date,starting_date,about_paragraph, status) VALUES (?, ?, ?, ?, ?,?)",
                     (userId,jobId,graduationDate,startDate,aboutParagraph,status))
         con.commit()
@@ -91,7 +91,7 @@ class Job:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         status = 0
-        cur.execute(
+        res = cur.execute(
             "SELECT * FROM jobsApplied WHERE status = ? AND user_id = ?",
             (status, user_id))
         checkFalse = res.fetchall()

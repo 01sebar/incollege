@@ -46,7 +46,7 @@ def jobScreenList(loggedInUser):
     print("press \"4\" to delete a job posting")
     print("press \"5\" to return to the options screen")
     if job.checkStatus(userId) == True:
-        print("A job you have applied for has been deleted")
+        print("1 or more jobs you have applied for have been deleted")
     selection = int(input())
     if selection == 1:
         jobsList= job.findAll()
