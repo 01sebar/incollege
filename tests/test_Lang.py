@@ -8,7 +8,7 @@ class TestClass:
     def testCreate(self):
         user = User(None)
         newUserId = user.create(
-            "user", "Pass123!", "Joe", "Momma", "USF", "CS")
+            "user", "Pass123!", "Joe", "Momma")
         user.createDefaultSettings()
         setting = Setting()
         assert setting.getValue("language", newUserId) == "english"
