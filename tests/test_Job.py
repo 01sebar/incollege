@@ -61,3 +61,20 @@ class TestClass:
         job.updateStatus(newJobId)
         assert job.checkStatus(user5Id) == True
 
+    def testRemoveJob(self):
+        user6 = User(None)
+        user6Id = user6.create("user6", "Pass123!",
+                               "John", "Doe")
+        user4 = User(None)
+        user4Id = user4.create(
+            "user4", "Pass123!", "John", "Doe")
+        job = Job()
+        newJobId = job.create("Software Developer", "program stuff",
+                              "Google", "San Francisco, CA", "500000", user4Id)
+        # We make sure the job is in DB
+        assert job.findOne(newJobId) != None
+        # We remove the job from DB
+        job.removeJob(newJobId) 
+        # We make sure the job is removed from DB
+        assert job.findOne(newJobId) == None
+
