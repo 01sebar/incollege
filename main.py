@@ -191,7 +191,7 @@ def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
     friendsList = friend.getFriends()
-    if not friendsList:
+    if not friendsList: 
         print("There is no one in your network...\n")
         input("\tPress any key to return to options screen\n")
         optionsScreen(loggedInUser)
@@ -224,15 +224,14 @@ def showMyNetworkScreen(loggedInUser: User):
             optionsScreen(loggedInUser)
         else:
             optionsScreen(loggedInUser)
-    elif selection == "2" and friendHasProfile:
-        # profile
+    elif selection == "2" and friendHasProfile: 
+        #profile
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.view(friendUserId)
         input("Press any key to return to view my network screen...")
         showMyNetworkScreen(loggedInUser)
     else:
         showMyNetworkScreen(loggedInUser)
-
 
 def underConstructionScreen():
     input("\n\t~ Under Construction ~ \n\tPress any key to restart")
