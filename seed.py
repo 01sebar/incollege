@@ -45,6 +45,37 @@ CREATE TABLE `settings` (
   FOREIGN KEY(setting_user_id) REFERENCES users(user_id)
 )
 """)
+
+#create jobsApplied table
+cur.execute("""
+DROP TABLE IF EXISTS `jobsApplied`;
+""")
+cur.execute("""
+CREATE TABLE `jobsApplied` (
+  `job_applied_key` INTEGER PRIMARY KEY NOT NULL,
+  `user_id` INTEGER NOT NULL,
+  `job_id` INTEGER NOT NULL,
+  `graduation_date` varchar(32) NOT NULL,
+  `starting_date` varchar(32) NOT NULL,
+  `about_paragraph` varchar(256) NOT NULL,
+  'status' BOOLEAN,
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+)
+""")
+#create jobsInterested table
+cur.execute("""
+DROP TABLE IF EXISTS `jobsInterested`;
+""")
+cur.execute("""
+CREATE TABLE `jobsInterested` (
+  `job_interested_key` INTEGER PRIMARY KEY NOT NULL,
+  `user_id` INTEGER NOT NULL,
+  `job_id` INTEGER NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+  FOREIGN KEY(job_id) REFERENCES jobs(job_id)
+)
+""")
+
 # Create `friends` table
 cur.execute("""
 DROP TABLE IF EXISTS `friends`;
