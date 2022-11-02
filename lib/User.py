@@ -107,3 +107,13 @@ class User:
             "UPDATE users SET user_major = ? WHERE user_id = ?",
             (major, self.userId))
         con.commit()
+
+    def getAll(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            
+            "SELECT user_id, user_firstname, user_lastname FROM users Wh",
+            (university, ))
+        users = res.fetchall()
+        return users
