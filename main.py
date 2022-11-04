@@ -416,6 +416,7 @@ def signup():
     res = cur.execute("SELECT COUNT() FROM users")
     userCount = res.fetchone()[0]
     print("Number of Users: " + str(userCount))
+
     if (userCount >= 5):
         print(
             "\tAll permitted accounts have been created.\n \tPlease come back later.\n"
@@ -433,9 +434,14 @@ def signup():
     lastname = input("Enter Last Name:")
     while (lastname == None):
         lastname = input("Enter Last Name: ")
+    userType=int(input("Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
+    print(userType )
+    print(type(userType))
+    while(userType < 1 or userType > 2):
+        userType=int(input("Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
 
     newUser = User(None)
-    newUser.create(username, password, firstname, lastname)
+    newUser.create(username, password, firstname, lastname,userType)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
     main()
