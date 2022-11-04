@@ -9,7 +9,7 @@ from lib.Friend import Friend
 from lib.screens.ProfileScreen import ProfileScreen
 from lib.screens.JobScreen import jobScreen
 from lib.screens.MessagingScreen import MessagingScreen
-
+from lib.Message import Message
 
 def postJobScreen(loggedInUser):
     clearConsole()
@@ -272,6 +272,9 @@ def optionsScreen(loggedInUser: User):
     friendInvites = friend.getInvites()
     print("\t8: You have", len(friendInvites), "new friend invites")
     print("\t9: View my profile")
+    message = Message(loggedInUser.getUserId())
+    messageList = message.getMessages()
+    print("\t10: You have", len(messageList), "new messages!")
     selection = int(input("\t0: Log out\n"))
     clearConsole()
     if selection == 1:
@@ -280,7 +283,7 @@ def optionsScreen(loggedInUser: User):
         findSomeoneScreen(loggedInUser)
     elif selection==3:
         messagingScreen=MessagingScreen(loggedInUser.getUserId())
-        messagingScreen.sendMessage()
+        messagingScreen.messageList()
         optionsScreen(loggedInUser)
     elif selection == 4:
         skillsScreen(loggedInUser)
@@ -296,6 +299,9 @@ def optionsScreen(loggedInUser: User):
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.render()
         optionsScreen(loggedInUser)
+    elif selection ==10:
+        messagingScreen=MessagingScreen(loggedInUser.getUserId())
+        messagingScreen.viewIncomingMessages(messageList)
     elif selection == 0:
         main()
 

@@ -134,3 +134,16 @@ cur.execute("""CREATE TABLE `educations` (
   FOREIGN KEY(education_profile_id) REFERENCES profiles(profile_id)
 )
 """)
+
+cur.execute("""
+DROP TABLE IF EXISTS `messages`;
+""")
+cur.execute("""CREATE TABLE `messages` (
+  `message_id` INTEGER PRIMARY KEY NOT NULL,
+  `from_user_id` varchar(64),
+  `to_user_id` varchar(64),
+  `message` varchar(512),
+  FOREIGN KEY(from_user_id) REFERENCES users(user_id),
+  FOREIGN KEY(to_user_id) REFERENCES users(user_id)
+)
+""")
