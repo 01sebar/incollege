@@ -17,6 +17,7 @@ class MessagingScreen:
         self.userId=userId
 
     def messageList(self):
+        newUser = User(self.userId)
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute("""SELECT user_id, user_firstname, user_lastname FROM users WHERE NOT user_id = ? """,(self.userId,))
@@ -34,7 +35,9 @@ class MessagingScreen:
         userToMessageID= userToMessage[0]       #the user we want to send the message to ID
         friend = Friend(self.userId)            #creating friend object and getting list of loggedinuser's friends
         friendsList = friend.getFriends()
-        if (userToMessageID not in friendsList[1]):          #if the user is not in their friends list, then they cant send a message to them
+        print(friendsList)
+        
+        if ((len(friendsList) == 0 or userToMessageID not in friendsList[1]) and newUser.getUsertype() != 2):          #if the user is not in their friends list, then they cant send a message to them
             print("I'm sorry, you are not friends with that person.\n")
             selection= int(input(print("\nSelect 1 to see a list of your friends or 0 to return to the options screen\n")))         #user is given the option to see a list of only their friends
             if(selection==0):
@@ -92,7 +95,4 @@ class MessagingScreen:
         if (selection=='y'):
             message = Message(self.userId)
             message.removeOne(messageToView[0])         #if the user wants to delete this message, call the removeone function that takes in message_id
-            print("\nmessage Removed\n")
-        
-
-       
+            print("\nMessage Removed\n")
