@@ -106,3 +106,12 @@ class User:
             "UPDATE users SET user_major = ? WHERE user_id = ?",
             (major, self.userId))
         con.commit()
+
+    def getUsertype(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT user_type FROM users WHERE user_id = ? LIMIT 1",
+            (self.userId, ))
+        userType = res.fetchone()
+        return userType[0] 
