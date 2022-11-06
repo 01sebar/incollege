@@ -11,6 +11,7 @@ from lib.screens.JobScreen import jobScreen
 from lib.screens.MessagingScreen import MessagingScreen
 from lib.Message import Message
 
+
 def postJobScreen(loggedInUser):
     clearConsole()
     con = sqlite3.connect("incollege.db")
@@ -192,7 +193,7 @@ def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
     friendsList = friend.getFriends()
-    if not friendsList: 
+    if not friendsList:
         print("There is no one in your network...\n")
         input("\tPress any key to return to options screen\n")
         optionsScreen(loggedInUser)
@@ -225,14 +226,15 @@ def showMyNetworkScreen(loggedInUser: User):
             optionsScreen(loggedInUser)
         else:
             optionsScreen(loggedInUser)
-    elif selection == "2" and friendHasProfile: 
-        #profile
+    elif selection == "2" and friendHasProfile:
+        # profile
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.view(friendUserId)
         input("Press any key to return to view my network screen...")
         showMyNetworkScreen(loggedInUser)
     else:
         showMyNetworkScreen(loggedInUser)
+
 
 def underConstructionScreen():
     input("\n\t~ Under Construction ~ \n\tPress any key to restart")
@@ -281,8 +283,8 @@ def optionsScreen(loggedInUser: User):
         jobScreenList(loggedInUser)
     elif selection == 2:
         findSomeoneScreen(loggedInUser)
-    elif selection==3:
-        messagingScreen=MessagingScreen(loggedInUser.getUserId())
+    elif selection == 3:
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.messageList()
         optionsScreen(loggedInUser)
     elif selection == 4:
@@ -299,8 +301,8 @@ def optionsScreen(loggedInUser: User):
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.render()
         optionsScreen(loggedInUser)
-    elif selection ==10:
-        messagingScreen=MessagingScreen(loggedInUser.getUserId())
+    elif selection == 10:
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
         optionsScreen(loggedInUser)
     elif selection == 0:
@@ -441,14 +443,14 @@ def signup():
     lastname = input("Enter Last Name:")
     while (lastname == None):
         lastname = input("Enter Last Name: ")
-    userType=int(input("Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
-    print(userType )
-    print(type(userType))
+    userType = int(input(
+        "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
     while(userType < 1 or userType > 2):
-        userType=int(input("Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
+        userType = int(input(
+            "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
 
     newUser = User(None)
-    newUser.create(username, password, firstname, lastname,userType)
+    newUser.create(username, password, firstname, lastname, userType)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
     main()
