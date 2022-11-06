@@ -8,7 +8,7 @@ class TestClass:
         # TO-DO check user type
         user = User(None)
         newUserId = user.create(
-            "user1", "Pass123!", "Joe", "Momma")
+            "user1", "Pass123!", "Joe", "Momma", 0)
         user.createDefaultSettings()
 
     def testSendMessage(self):
