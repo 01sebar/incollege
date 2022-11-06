@@ -302,6 +302,7 @@ def optionsScreen(loggedInUser: User):
     elif selection ==10:
         messagingScreen=MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
     elif selection == 0:
         main()
 

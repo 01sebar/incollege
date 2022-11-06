@@ -91,8 +91,11 @@ class MessagingScreen:
         print("\n"+ messageToView[3] + "\n")
         selection=""
         while(selection!='y' or selection!='n'):
-            selection = int(input("Would you like to delete this message? y/n? \n"))    #prompt the user to delete the message they just read
-        if (selection=='y'):
-            message = Message(self.userId)
-            message.removeOne(messageToView[0])         #if the user wants to delete this message, call the removeone function that takes in message_id
-            print("\nMessage Removed\n")
+            selection = input("Would you like to delete this message? y/n? \n")    #prompt the user to delete the message they just read
+            if (selection=='y'):
+                    message = Message(self.userId)
+                    message.removeOne(messageToView[0])         #if the user wants to delete this message, call the removeone function that takes in message_id
+                    print("\nMessage Removed\n")
+                    return
+            else:
+                return
