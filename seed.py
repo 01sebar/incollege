@@ -13,7 +13,8 @@ CREATE TABLE `users` (
   `user_firstname` varchar(32) NOT NULL,
   `user_lastname` varchar(32) NOT NULL,
   `user_university` varchar(64) NOT NULL,
-  `user_major` varchar(64) NOT NULL
+  `user_major` varchar(64) NOT NULL,
+  `user_Type` INTEGER NOT NULL
 )
 """)
 # Create `jobs` table
@@ -131,5 +132,18 @@ cur.execute("""CREATE TABLE `educations` (
   `edu_endingYear` varchar(32),
   `education_profile_Id` INTEGER NOT NULL,
   FOREIGN KEY(education_profile_id) REFERENCES profiles(profile_id)
+)
+""")
+
+cur.execute("""
+DROP TABLE IF EXISTS `messages`;
+""")
+cur.execute("""CREATE TABLE `messages` (
+  `message_id` INTEGER PRIMARY KEY NOT NULL,
+  `from_user_id` varchar(64),
+  `to_user_id` varchar(64),
+  `message` varchar(512),
+  FOREIGN KEY(from_user_id) REFERENCES users(user_id),
+  FOREIGN KEY(to_user_id) REFERENCES users(user_id)
 )
 """)

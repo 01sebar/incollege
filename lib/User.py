@@ -14,7 +14,7 @@ class User:
     def isLoggedIn(self):
         return self.userId != None
 
-    def create(self, username, password, firstname, lastname):
+    def create(self, username, password, firstname, lastname, userType):
         firstname = firstname.lower()
         lastname = lastname.lower()
         format = Format()
@@ -23,8 +23,8 @@ class User:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university, user_major) VALUES (?, ?, ?, ?, ?, ?)",
-            (username, password, firstname, lastname, university, major))
+            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university, user_major,user_type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (username, password, firstname, lastname, university, major, userType))
         con.commit()
         self.userId = cur.lastrowid
         return self.userId
@@ -32,7 +32,6 @@ class User:
     def findOneByUsername(self, username):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        #hi
         res = cur.execute(
             "SELECT user_id, user_username, user_password FROM users WHERE user_username = ? LIMIT 1",
             (username, ))
@@ -107,3 +106,12 @@ class User:
             "UPDATE users SET user_major = ? WHERE user_id = ?",
             (major, self.userId))
         con.commit()
+
+    def getUsertype(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT user_type FROM users WHERE user_id = ? LIMIT 1",
+            (self.userId, ))
+        userType = res.fetchone()
+        return userType[0] 

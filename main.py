@@ -8,6 +8,8 @@ from lib.Setting import Setting
 from lib.Friend import Friend
 from lib.screens.ProfileScreen import ProfileScreen
 from lib.screens.JobScreen import jobScreen
+from lib.screens.MessagingScreen import MessagingScreen
+from lib.Message import Message
 
 
 def postJobScreen(loggedInUser):
@@ -191,7 +193,7 @@ def showMyNetworkScreen(loggedInUser: User):
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
     friendsList = friend.getFriends()
-    if not friendsList: 
+    if not friendsList:
         print("There is no one in your network...\n")
         input("\tPress any key to return to options screen\n")
         optionsScreen(loggedInUser)
@@ -224,14 +226,15 @@ def showMyNetworkScreen(loggedInUser: User):
             optionsScreen(loggedInUser)
         else:
             optionsScreen(loggedInUser)
-    elif selection == "2" and friendHasProfile: 
-        #profile
+    elif selection == "2" and friendHasProfile:
+        # profile
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.view(friendUserId)
         input("Press any key to return to view my network screen...")
         showMyNetworkScreen(loggedInUser)
     else:
         showMyNetworkScreen(loggedInUser)
+
 
 def underConstructionScreen():
     input("\n\t~ Under Construction ~ \n\tPress any key to restart")
@@ -262,35 +265,47 @@ def optionsScreen(loggedInUser: User):
     print("Select an option:")
     print("\t1: Search for a Job")
     print("\t2: Find someone you know")
-    print("\t3: Learn a new skill")
-    print("\t4: for Useful Links.")
-    print("\t5: for InCollege Important Links.")
-    print("\t6: Show my network")
+    print("\t3: Send a message to someone")
+    print("\t4: Learn a new skill")
+    print("\t5: for Useful Links.")
+    print("\t6: for InCollege Important Links.")
+    print("\t7: Show my network")
     friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
-    print("\t7: You have", len(friendInvites), "new friend invites")
-    print("\t8: View my profile")
-    selection = int(input("\t9: Log out\n"))
+    print("\t8: You have", len(friendInvites), "new friend invites")
+    print("\t9: View my profile")
+    message = Message(loggedInUser.getUserId())
+    messageList = message.getMessages()
+    print("\t10: You have", len(messageList), "new messages!")
+    selection = int(input("\t0: Log out\n"))
     clearConsole()
     if selection == 1:
         jobScreenList(loggedInUser)
     elif selection == 2:
         findSomeoneScreen(loggedInUser)
     elif selection == 3:
-        skillsScreen(loggedInUser)
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
+        messagingScreen.messageList()
+        optionsScreen(loggedInUser)
     elif selection == 4:
-        usefulLinks(loggedInUser)
+        skillsScreen(loggedInUser)
     elif selection == 5:
-        InCollegeImportantLinks(loggedInUser)
+        usefulLinks(loggedInUser)
     elif selection == 6:
-        showMyNetworkScreen(loggedInUser)
+        InCollegeImportantLinks(loggedInUser)
     elif selection == 7:
-        acceptInvitesScreen(loggedInUser)
+        showMyNetworkScreen(loggedInUser)
     elif selection == 8:
+        acceptInvitesScreen(loggedInUser)
+    elif selection == 9:
         profileScreen = ProfileScreen(loggedInUser)
         profileScreen.render()
         optionsScreen(loggedInUser)
-    elif selection == 9:
+    elif selection == 10:
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
+        messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
+    elif selection == 0:
         main()
 
 
@@ -410,6 +425,7 @@ def signup():
     res = cur.execute("SELECT COUNT() FROM users")
     userCount = res.fetchone()[0]
     print("Number of Users: " + str(userCount))
+
     if (userCount >= 5):
         print(
             "\tAll permitted accounts have been created.\n \tPlease come back later.\n"
@@ -427,9 +443,14 @@ def signup():
     lastname = input("Enter Last Name:")
     while (lastname == None):
         lastname = input("Enter Last Name: ")
+    userType = int(input(
+        "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
+    while(userType < 1 or userType > 2):
+        userType = int(input(
+            "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
 
     newUser = User(None)
-    newUser.create(username, password, firstname, lastname)
+    newUser.create(username, password, firstname, lastname, userType)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
     main()

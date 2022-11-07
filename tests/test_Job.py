@@ -7,7 +7,7 @@ class TestClass:
 
     def testCreate(self):
         user = User(None)
-        newUserId = user.create("user1", "Pass123!", "John", "Doe")
+        newUserId = user.create("user1", "Pass123!", "John", "Doe", 0)
         job = Job()
         newJobId = job.create("Software Developer", "program stuff",
                               "Google", "San Francisco, CA", "500000", newUserId)
@@ -17,7 +17,7 @@ class TestClass:
 
     def testJobInterest(self):
         user = User(None)
-        newUserId = user.create("user2", "Pass123!", "John", "Doe")
+        newUserId = user.create("user2", "Pass123!", "John", "Doe", 0)
         job = Job()
         newJobId = job.create("Software Developer", "program stuff",
                               "Google", "San Francisco, CA", "500000", newUserId)
@@ -33,10 +33,10 @@ class TestClass:
     def testCreateApplicationAndHasApplied(self):
         user = User(None)
         newUserId = user.create("user2", "Pass123!",
-                                "John", "Doe")
+                                "John", "Doe", 0)
         userToApply = User(None)
         newUserToApplyId = userToApply.create(
-            "user3", "Pass123!", "John", "Doe")
+            "user3", "Pass123!", "John", "Doe", 0)
         job = Job()
         newJobId = job.create("Software Developer", "program stuff",
                               "Google", "San Francisco, CA", "500000", newUserId)
@@ -48,10 +48,10 @@ class TestClass:
     def testCheckStatusAndUpdateStatus(self):
         user4 = User(None)
         user4Id = user4.create("user4", "Pass123!",
-                               "John", "Doe")
+                               "John", "Doe", 0)
         user5 = User(None)
         user5Id = user5.create(
-            "user3", "Pass123!", "John", "Doe")
+            "user3", "Pass123!", "John", "Doe", 0)
         job = Job()
         newJobId = job.create("Software Developer", "program stuff",
                               "Google", "San Francisco, CA", "500000", user4Id)
@@ -64,17 +64,16 @@ class TestClass:
     def testRemoveJob(self):
         user6 = User(None)
         user6Id = user6.create("user6", "Pass123!",
-                               "John", "Doe")
+                               "John", "Doe", 0)
         user4 = User(None)
         user4Id = user4.create(
-            "user4", "Pass123!", "John", "Doe")
+            "user4", "Pass123!", "John", "Doe", 0)
         job = Job()
         newJobId = job.create("Software Developer", "program stuff",
                               "Google", "San Francisco, CA", "500000", user4Id)
         # We make sure the job is in DB
         assert job.findOne(newJobId) != None
         # We remove the job from DB
-        job.removeJob(newJobId) 
+        job.removeJob(newJobId)
         # We make sure the job is removed from DB
         assert job.findOne(newJobId) == None
-
