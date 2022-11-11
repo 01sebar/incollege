@@ -10,6 +10,7 @@ from lib.screens.ProfileScreen import ProfileScreen
 from lib.screens.JobScreen import jobScreen
 from lib.screens.MessagingScreen import MessagingScreen
 from lib.Message import Message
+from lib.Notification import Notification
 
 
 def postJobScreen(loggedInUser):
@@ -42,6 +43,7 @@ def jobScreenList(loggedInUser):
     jobscreen = jobScreen(loggedInUser)
     job = Job()
     userId = loggedInUser.getUserId()
+    jobNotications = 0
     print("\n\tFind or post A Job\n")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
@@ -261,6 +263,10 @@ def skillsScreen(loggedInUser):
 
 def optionsScreen(loggedInUser: User):
     clearConsole()
+    notifications = Notification(loggedInUser)
+    friend = Friend(loggedInUser.getUserId())
+    message = Message(loggedInUser.getUserId())
+
     print("\n\tOptions Screen")
     print("Select an option:")
     print("\t1: Search for a Job")
@@ -270,11 +276,14 @@ def optionsScreen(loggedInUser: User):
     print("\t5: for Useful Links.")
     print("\t6: for InCollege Important Links.")
     print("\t7: Show my network")
-    friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
     print("\t8: You have", len(friendInvites), "new friend invites")
-    print("\t9: View my profile")
-    message = Message(loggedInUser.getUserId())
+
+    profileCreated = notifications.profileNotCreated()
+    if (not profileCreated):
+        print("\t9: View my profile -> Don't forget to create a profile!")
+    else:
+        print("\t9: View my profile")
     messageList = message.getMessages()
     print("\t10: You have", len(messageList), "new messages!")
     selection = int(input("\t0: Log out\n"))
