@@ -11,7 +11,7 @@ class Notification:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute(
-            "SELECT * FROM jobsApplied WHERE user_id = ?",
+            """SELECT * FROM jobsApplied WHERE user_id = ?""",
             (userId))
         appliedJobList = res.fetchone()
         return len(appliedJobList)
@@ -32,7 +32,7 @@ class Notification:
         for jobId in deletedJobIds:
             res = cur.execute("""SELECT job_title FROM jobs WHERE job_id = ?""", (jobId))
             deletedJobTitles.append(res.fetchone())
-            
+
         return deletedJobTitles
 
     def newMemberJoined(self,userId):

@@ -47,8 +47,8 @@ def jobScreenList(loggedInUser):
     userId = loggedInUser.getUserId()
     jobNotications = 0
     print("\n\tFind or post A Job\n")
-    numOfAppliedJobs = job.findAllApplied(userId)
-    print("You have currently applied for " + len(numOfAppliedJobs) + " jobs")
+    numOfAppliedJobs = len(job.findAllApplied(userId))
+    print("You have currently applied for " + numOfAppliedJobs + " jobs")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
     print("press \"3\" to view save later list")
