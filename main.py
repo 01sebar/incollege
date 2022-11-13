@@ -36,7 +36,8 @@ def postJobScreen(loggedInUser):
     job = Job()
     job.create(title, description, employer, location, salary,
                loggedInUser.getUserId())
-    notification.newJobPosted(title, loggedInUser.getUserId())
+    people = notification.newJobPosted(title, str(loggedInUser.getUserId()))
+    print(people)
     jobScreenList(loggedInUser)
 
 
@@ -48,7 +49,7 @@ def jobScreenList(loggedInUser):
     jobNotications = 0
     print("\n\tFind or post A Job\n")
     numOfAppliedJobs = len(job.findAllApplied(userId))
-    print("You have currently applied for " + numOfAppliedJobs + " jobs")
+    print("You have currently applied for " + str(numOfAppliedJobs) + " jobs")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
     print("press \"3\" to view save later list")
@@ -293,10 +294,14 @@ def optionsScreen(loggedInUser: User):
         print("\t10: You have messages waiting for you")
     else:
         print("\t10: No new messages.")
+
+    print("\t11: Notifications")
+    
     deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
+    print(deletedJobs)
     if (deletedJobs):
         for job in deletedJobs:
-            print("\tA job that you applied for has been deleted: " + job)
+            print("\tA job that you applied for has been deleted: " + str(job))
     selection = int(input("\t0: Log out\n"))
     clearConsole()
     if selection == 1:
@@ -324,6 +329,8 @@ def optionsScreen(loggedInUser: User):
     elif selection == 10:
         messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
+    elif selection == 11:
         optionsScreen(loggedInUser)
     elif selection == 0:
         main()
