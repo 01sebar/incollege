@@ -272,6 +272,12 @@ def optionsScreen(loggedInUser: User):
     friend = Friend(loggedInUser.getUserId())
     message = Message(loggedInUser.getUserId())
 
+    print("Day: " + str(loggedInUser.getDayCount()))
+
+    if loggedInUser.getDayCount()[0] > 7:
+        newNotification = Notification(loggedInUser)
+        newNotification.weekSinceLastJobApply(str(loggedInUser.getUserId()))
+        loggedInUser.setDayCount(0)
 
     print("\n\tOptions Screen")
     print("Select an option:")
@@ -427,9 +433,8 @@ def login():
         print("\tYou have successfully logged in\n")
         clearConsole()
         loggedInUser = User(user[0])
-        newNotification = Notification(str(loggedInUser.getUserId()))
+        loggedInUser.updateDayCount()
         optionsScreen(loggedInUser)
-
 
 def checkUsername(username):
     if (not checkStrUtils.checkIfStrIsCorrectLength(username, 1, 32)):

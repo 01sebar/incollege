@@ -54,11 +54,9 @@ class Notification:
         return
 
     def weekSinceLastJobApply(self, userId):
-        con = sqlite3.connect("incollege.db")
-        cur = con.cursor()
-        res = cur.execute()
+
         newMessage = Message(str(userId))
-        newMessage.createMessage(str("Its has been more than 7 days since you've applied for a job. Go forth and start applying!"))
+        newMessage.createMessage(str(userId), str("Its has been more than 7 days since you've applied for a job. Go forth and start applying!"))
 
         return
     
@@ -74,11 +72,3 @@ class Notification:
             self.profileId = profile[0]
         return profile != None
 
-    def dayCountAdd(self, userId):
-        self.dayCount = self.dayCount + 1
-
-    def dayCountReset(self, userId):
-        self.dayCount = 0
-
-    def giveDayCount(self, userId):
-        return self.dayCount

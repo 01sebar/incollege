@@ -14,7 +14,8 @@ CREATE TABLE `users` (
   `user_lastname` varchar(32) NOT NULL,
   `user_university` varchar(64) NOT NULL,
   `user_major` varchar(64) NOT NULL,
-  `user_Type` INTEGER NOT NULL
+  `user_Type` INTEGER NOT NULL,
+  `user_daycount` INTEGER NOT NULL
 )
 """)
 # Create `jobs` table

@@ -99,6 +99,7 @@ class jobScreen:
             newApplication=Job()
             newApplication.createApplication(graduationDate,startDate,aboutParagraph, userId, jobId)
             print("\nJob applied successfully\n")
+            self.loggedInUser.setDayCount(0)
             input("Press any key to return to the Job List Screen\n")
     
     def addjobInterested(self, pickedJob):

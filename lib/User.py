@@ -20,11 +20,12 @@ class User:
         format = Format()
         university = ""
         major = ""
+        dayCount = 0
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university, user_major,user_type) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (username, password, firstname, lastname, university, major, userType))
+            "INSERT INTO users (user_username, user_password, user_firstname, user_lastname, user_university, user_major,user_type, user_daycount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (username, password, firstname, lastname, university, major, userType, dayCount))
         con.commit()
         self.userId = cur.lastrowid
         return self.userId
@@ -114,4 +115,43 @@ class User:
             "SELECT user_type FROM users WHERE user_id = ? LIMIT 1",
             (self.userId, ))
         userType = res.fetchone()
-        return userType[0] 
+        return userType[0]
+
+    def updateDayCount(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+
+        res = cur.execute(
+            "SELECT user_daycount FROM users WHERE user_id = ? LIMIT 1",
+            (self.userId, ))
+        daycount = res.fetchone()
+        
+        newVal = daycount[0] + 1
+
+        cur.execute(
+            "UPDATE users SET user_daycount = ? WHERE user_id = ?",
+            (newVal, self.userId))
+
+        con.commit()
+
+
+    def setDayCount(self, newVal):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+
+        cur.execute(
+            "UPDATE users SET user_daycount = ? WHERE user_id = ?",
+            (newVal, self.userId))
+
+        con.commit()
+
+    def getDayCount(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT user_daycount FROM users WHERE user_id = ? LIMIT 1",
+            (self.userId, ))
+        daycount = res.fetchone()
+        return daycount
+
+    
