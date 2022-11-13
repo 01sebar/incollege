@@ -272,6 +272,7 @@ def optionsScreen(loggedInUser: User):
     friend = Friend(loggedInUser.getUserId())
     message = Message(loggedInUser.getUserId())
 
+
     print("\n\tOptions Screen")
     print("Select an option:")
     print("\t1: Search for a Job")
@@ -294,8 +295,6 @@ def optionsScreen(loggedInUser: User):
         print("\t10: You have messages waiting for you")
     else:
         print("\t10: No new messages.")
-
-    print("\t11: Notifications")
     
     deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
     print(deletedJobs)
@@ -329,8 +328,6 @@ def optionsScreen(loggedInUser: User):
     elif selection == 10:
         messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
-        optionsScreen(loggedInUser)
-    elif selection == 11:
         optionsScreen(loggedInUser)
     elif selection == 0:
         main()
@@ -422,6 +419,7 @@ def login():
 
     tempUser = User(None)
     user = tempUser.findOneByUsername(username)
+    
     if (user == None or user[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
@@ -429,6 +427,7 @@ def login():
         print("\tYou have successfully logged in\n")
         clearConsole()
         loggedInUser = User(user[0])
+        newNotification = Notification(str(loggedInUser.getUserId()))
         optionsScreen(loggedInUser)
 
 
@@ -480,6 +479,8 @@ def signup():
     newUser.create(username, password, firstname, lastname, userType)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
+    userNotification = Notification(newUser.getUserId())
+    userNotification.newMemberJoined(username, str(newUser.getUserId()))
     main()
 
 
