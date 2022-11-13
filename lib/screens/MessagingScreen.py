@@ -101,17 +101,24 @@ class MessagingScreen:
         self.viewMessage(messageToView)
 
     # function to view a specific message and give options to delete/ reply
-    def viewMessage(self, messageToView):
-        print("\n" + messageToView[3] + "\n")
-        selection = ""
-        while(selection != 'y' or selection != 'n'):
-            # prompt the user to delete the message they just read
-            selection = input("Would you like to delete this message? y/n? \n")
-            if (selection == 'y'):
+    def viewMessage(self, messageToView):                       #function to view a specific message and give options to delete/ reply
+        newMessage = Message(self.userId)
+        newUser = User(self.userId)
+        print("\n"+ messageToView[3] + "\n")
+        sender = newMessage.getSender(messageToView[1])
+        selection=""
+        while(selection!='y' or selection!='n'):
+            selection = input("Would you like to delete this message? y/n? \n")   #prompt the user to delete the message they just read
+            if (selection=='y'):
                 message = Message(self.userId)
-                # if the user wants to delete this message, call the removeone function that takes in message_id
-                message.removeOne(messageToView[0])
+                message.removeOne(messageToView[0])         #if the user wants to delete this message, call the removeone function that takes in message_id
                 print("\nMessage Removed\n")
                 return
             else:
+                respond = input("Would you like to repsond to this message? y/n? \n")
+
+                if (respond == "y"):
+                    userMessage = input("Enter your message: ")
+                    message = Message(self.userId)
+                    message.createMessage(int(messageToView[1]), userMessage)
                 return
