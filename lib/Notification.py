@@ -1,6 +1,7 @@
 import sqlite3
 from lib.Profile import Profile
 from lib.User import User
+from lib.Message import Message
 
 class Notification:
     def __init__(self, loggedInUser: User):
@@ -16,11 +17,15 @@ class Notification:
         appliedJobList = res.fetchone()
         return len(appliedJobList)
 
-    def newJobPosted(self,title, userId):
+    def newJobPosted(self, title, userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute("""SELECT * FROM users WHERE user_id != ? """, (userId))
-        usersToNotify = res.fetchone()
+        usersToNotify = res.fetchall()
+        if len(usersToNotify) > 0:
+            for user in usersToNotify:
+                newMessage = Message(str(user[0]))
+                newMessage.createMessage(str(user[0]), "A new Job as been posted:" + str(title) + " Apply Now!")
         return usersToNotify
 
     def appliedJobDeleted(self,userId):
@@ -38,7 +43,11 @@ class Notification:
     def newMemberJoined(self,userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        res = cur.execute()
+        res = cur.execute("""SELECT * FROM users WHERE user_id != ? """, (userId))
+        usersToNotify = res.fetchall()
+
+        if len(usersToNotify) > 0:
+            print("")
         return
 
     def weekSinceLastJobApply(self,userId):
@@ -58,3 +67,6 @@ class Notification:
         if profile:
             self.profileId = profile[0]
         return profile != None
+
+    def sendJobNotification(self, userId):
+        print("")
