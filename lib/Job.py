@@ -80,14 +80,6 @@ class Job:
           jobList = res.fetchall()
           return jobList
 
-    def findAllApplied(self, userId):
-          con = sqlite3.connect("incollege.db")
-          cur = con.cursor()
-          res = cur.execute("SELECT * FROM jobs INNER JOIN jobsApplied on jobs.job_id = jobsApplied.job_id WHERE user_id = ? ",
-                      (userId,))
-          jobList = res.fetchall()
-          return jobList
-
     def removeInterestedJob(self, jobId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
