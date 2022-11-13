@@ -7,6 +7,7 @@ class Notification:
     def __init__(self, loggedInUser: User):
         self.profileId = None
         self.loggedInUser = loggedInUser
+        self.dayCount = 0
 
     def NumOfAppliedJobs(self,userId):
         con = sqlite3.connect("incollege.db")
@@ -40,20 +41,25 @@ class Notification:
 
         return deletedJobTitles
 
-    def newMemberJoined(self,userId):
+    def newMemberJoined(self, username, userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute("""SELECT * FROM users WHERE user_id != ? """, (userId))
         usersToNotify = res.fetchall()
 
         if len(usersToNotify) > 0:
-            print("")
+            for user in usersToNotify:
+                newMessage = Message(str(user[0]))
+                newMessage.createMessage(str(user[0]), str(username) + " has joined InCollege! Say Hello!")
         return
 
-    def weekSinceLastJobApply(self,userId):
+    def weekSinceLastJobApply(self, userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         res = cur.execute()
+        newMessage = Message(str(userId))
+        newMessage.createMessage(str("Its has been more than 7 days since you've applied for a job. Go forth and start applying!"))
+
         return
     
     def profileNotCreated(self):
@@ -68,5 +74,11 @@ class Notification:
             self.profileId = profile[0]
         return profile != None
 
-    def sendJobNotification(self, userId):
-        print("")
+    def dayCountAdd(self, userId):
+        self.dayCount = self.dayCount + 1
+
+    def dayCountReset(self, userId):
+        self.dayCount = 0
+
+    def giveDayCount(self, userId):
+        return self.dayCount
