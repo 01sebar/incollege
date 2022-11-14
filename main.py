@@ -55,8 +55,8 @@ def jobScreenList(loggedInUser):
     print("press \"3\" to view save later list")
     print("press \"4\" to delete a job posting")
     print("press \"5\" to return to the options screen")
-    if job.checkStatus(userId) == True:
-        print("1 or more jobs you have applied for have been deleted")
+    # if job.checkStatus(userId) == True:
+    #     print("1 or more jobs you have applied for have been deleted")
     selection = int(input())
     if selection == 1:
         jobsList = job.findAll()
@@ -98,7 +98,7 @@ def deleteJob(loggedInUser):
     # lets all the users who have applied know that the job is not avaiable anymore
     jobs.updateStatus(jobToDelete[0])
     jobs.removeJob(jobToDelete[0])
-    print("\nthingy deleted\n")
+    print("\nJob Posting Deleted\n")
     jobScreenList(loggedInUser)
 
 
@@ -272,7 +272,6 @@ def optionsScreen(loggedInUser: User):
     friend = Friend(loggedInUser.getUserId())
     message = Message(loggedInUser.getUserId())
 
-    print("Day: " + str(loggedInUser.getDayCount()))
 
     if loggedInUser.getDayCount()[0] > 7:
         newNotification = Notification(loggedInUser)

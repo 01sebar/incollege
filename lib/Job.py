@@ -112,8 +112,8 @@ class Job:
             "SELECT * FROM jobsApplied WHERE status = ? AND user_id = ?",
             (status, user_id))
         checkFalse = res.fetchall()
-        for job in checkFalse:
-            self.removeApplication(job[2],job[1])
+        # for job in checkFalse:
+        #     self.removeApplication(job[2],job[1])
         if checkFalse:
             return True
         else:
