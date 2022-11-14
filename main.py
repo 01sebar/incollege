@@ -10,7 +10,6 @@ from lib.screens.ProfileScreen import ProfileScreen
 from lib.screens.JobScreen import jobScreen
 from lib.screens.MessagingScreen import MessagingScreen
 from lib.Message import Message
-from lib.Notification import Notification
 
 
 def postJobScreen(loggedInUser):
@@ -32,12 +31,9 @@ def postJobScreen(loggedInUser):
     location = input("Enter location of employer: ")
     salary = input("Enter salary for the position: ")
 
-    notification = Notification(loggedInUser)
     job = Job()
     job.create(title, description, employer, location, salary,
                loggedInUser.getUserId())
-    people = notification.newJobPosted(title, str(loggedInUser.getUserId()))
-    print(people)
     jobScreenList(loggedInUser)
 
 
@@ -46,10 +42,7 @@ def jobScreenList(loggedInUser):
     jobscreen = jobScreen(loggedInUser)
     job = Job()
     userId = loggedInUser.getUserId()
-    jobNotications = 0
     print("\n\tFind or post A Job\n")
-    numOfAppliedJobs = len(job.findAllApplied(userId))
-    print("You have currently applied for " + str(numOfAppliedJobs) + " jobs")
     print("press \"1\" to search for a Job or internship.")
     print("press \"2\" to post a job")
     print("press \"3\" to view save later list")
@@ -273,8 +266,6 @@ def optionsScreen(loggedInUser: User):
     message = Message(loggedInUser.getUserId())
     job = Job()
 
-
-
     if loggedInUser.getDayCount()[0] > 7:
         newNotification = Notification(loggedInUser)
         newNotification.weekSinceLastJobApply(str(loggedInUser.getUserId()))
@@ -289,20 +280,17 @@ def optionsScreen(loggedInUser: User):
     print("\t5: for Useful Links.")
     print("\t6: for InCollege Important Links.")
     print("\t7: Show my network")
+    friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
     print("\t8: You have", len(friendInvites), "new friend invites")
-
-    profileCreated = notifications.profileNotCreated()
-    if (not profileCreated):
-        print("\t9: View my profile -> Don't forget to create a profile!")
-    else:
-        print("\t9: View my profile")
+    print("\t9: View my profile")
+    message = Message(loggedInUser.getUserId())
     messageList = message.getMessages()
     if(len(messageList) > 0):
         print("\t10: You have messages waiting for you")
     else:
         print("\t10: No new messages.")
-    
+
     deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
     job.removeApplication(loggedInUser.getUserId())
 
@@ -336,6 +324,8 @@ def optionsScreen(loggedInUser: User):
     elif selection == 10:
         messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
+    elif selection == 11:
         optionsScreen(loggedInUser)
     elif selection == 0:
         main()
@@ -427,7 +417,7 @@ def login():
 
     tempUser = User(None)
     user = tempUser.findOneByUsername(username)
-    
+
     if (user == None or user[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
@@ -437,6 +427,7 @@ def login():
         loggedInUser = User(user[0])
         loggedInUser.updateDayCount()
         optionsScreen(loggedInUser)
+
 
 def checkUsername(username):
     if (not checkStrUtils.checkIfStrIsCorrectLength(username, 1, 32)):
