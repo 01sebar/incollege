@@ -271,6 +271,8 @@ def optionsScreen(loggedInUser: User):
     notifications = Notification(loggedInUser)
     friend = Friend(loggedInUser.getUserId())
     message = Message(loggedInUser.getUserId())
+    job = Job()
+
 
 
     if loggedInUser.getDayCount()[0] > 7:
@@ -302,7 +304,8 @@ def optionsScreen(loggedInUser: User):
         print("\t10: No new messages.")
     
     deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
-    print(deletedJobs)
+    job.removeApplication(loggedInUser.getUserId())
+
     if (deletedJobs):
         for job in deletedJobs:
             print("\tA job that you applied for has been deleted: " + str(job))

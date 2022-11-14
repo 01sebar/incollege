@@ -32,12 +32,8 @@ class Notification:
     def appliedJobDeleted(self,userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
-        res = cur.execute("""SELECT job_id FROM jobsApplied WHERE user_id = ? AND status = ?""", (userId, 0))
-        deletedJobIds = res.fetchall()
-        deletedJobTitles = []
-        for jobId in deletedJobIds:
-            res = cur.execute("""SELECT job_title FROM jobs WHERE job_id = ?""", (jobId))
-            deletedJobTitles.append(res.fetchone())
+        res = cur.execute("""SELECT job_title FROM jobsApplied WHERE user_id = ? AND status = ?""", (userId, 0))
+        deletedJobTitles = res.fetchall()
 
         return deletedJobTitles
 
