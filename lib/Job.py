@@ -28,8 +28,11 @@ class Job:
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         status =1
-        cur.execute("INSERT INTO jobsApplied (user_id,job_id,graduation_date,starting_date,about_paragraph, status) VALUES (?, ?, ?, ?, ?,?)",
-                    (userId,jobId,graduationDate,startDate,aboutParagraph,status))
+        res = cur.execute("SELECT job_title FROM jobs WHERE job_id = ? ", 
+                    (jobId,))
+        jobTitle = res.fetchone()
+        cur.execute("INSERT INTO jobsApplied (user_id,job_id,graduation_date,starting_date,about_paragraph, status, job_title) VALUES (?, ?, ?, ?, ?,?,?)",
+                    (userId,jobId,graduationDate,startDate,aboutParagraph,status,jobTitle[0]))
         con.commit()
         return cur.lastrowid
 
@@ -96,7 +99,7 @@ class Job:
             (newStatus, jobId))
         con.commit()
         
-    def checkStatus(self, user_id):
+    def removeApplication(self, user_id):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         status = 0
@@ -105,13 +108,9 @@ class Job:
             (status, user_id))
         checkFalse = res.fetchall()
         for job in checkFalse:
-            self.removeApplication(job[2],job[1])
-        if checkFalse:
-            return True
-        else:
-            return False
+             self.applicationsToRemove(job[2],job[1])
 
-    def removeApplication(self, jobId, userId):
+    def applicationsToRemove(self, jobId, userId):
         con = sqlite3.connect("incollege.db")
         cur = con.cursor()
         status = 0

@@ -48,8 +48,8 @@ def jobScreenList(loggedInUser):
     print("press \"3\" to view save later list")
     print("press \"4\" to delete a job posting")
     print("press \"5\" to return to the options screen")
-    if job.checkStatus(userId) == True:
-        print("1 or more jobs you have applied for have been deleted")
+    # if job.checkStatus(userId) == True:
+    #     print("1 or more jobs you have applied for have been deleted")
     selection = int(input())
     if selection == 1:
         jobsList = job.findAll()
@@ -91,7 +91,7 @@ def deleteJob(loggedInUser):
     # lets all the users who have applied know that the job is not avaiable anymore
     jobs.updateStatus(jobToDelete[0])
     jobs.removeJob(jobToDelete[0])
-    print("\nthingy deleted\n")
+    print("\nJob Posting Deleted\n")
     jobScreenList(loggedInUser)
 
 
@@ -261,6 +261,16 @@ def skillsScreen(loggedInUser):
 
 def optionsScreen(loggedInUser: User):
     clearConsole()
+    notifications = Notification(loggedInUser)
+    friend = Friend(loggedInUser.getUserId())
+    message = Message(loggedInUser.getUserId())
+    job = Job()
+
+    if loggedInUser.getDayCount()[0] > 7:
+        newNotification = Notification(loggedInUser)
+        newNotification.weekSinceLastJobApply(str(loggedInUser.getUserId()))
+        loggedInUser.setDayCount(0)
+
     print("\n\tOptions Screen")
     print("Select an option:")
     print("\t1: Search for a Job")
@@ -276,7 +286,17 @@ def optionsScreen(loggedInUser: User):
     print("\t9: View my profile")
     message = Message(loggedInUser.getUserId())
     messageList = message.getMessages()
-    print("\t10: You have", len(messageList), "new messages!")
+    if(len(messageList) > 0):
+        print("\t10: You have messages waiting for you")
+    else:
+        print("\t10: No new messages.")
+
+    deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
+    job.removeApplication(loggedInUser.getUserId())
+
+    if (deletedJobs):
+        for job in deletedJobs:
+            print("\tA job that you applied for has been deleted: " + str(job))
     selection = int(input("\t0: Log out\n"))
     clearConsole()
     if selection == 1:
@@ -304,6 +324,8 @@ def optionsScreen(loggedInUser: User):
     elif selection == 10:
         messagingScreen = MessagingScreen(loggedInUser.getUserId())
         messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
+    elif selection == 11:
         optionsScreen(loggedInUser)
     elif selection == 0:
         main()
@@ -395,6 +417,7 @@ def login():
 
     tempUser = User(None)
     user = tempUser.findOneByUsername(username)
+
     if (user == None or user[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
@@ -402,6 +425,7 @@ def login():
         print("\tYou have successfully logged in\n")
         clearConsole()
         loggedInUser = User(user[0])
+        loggedInUser.updateDayCount()
         optionsScreen(loggedInUser)
 
 
@@ -453,6 +477,8 @@ def signup():
     newUser.create(username, password, firstname, lastname, userType)
     newUser.createDefaultSettings()
     print("\tAccount Created!\n")
+    userNotification = Notification(newUser.getUserId())
+    userNotification.newMemberJoined(username, str(newUser.getUserId()))
     main()
 
 
