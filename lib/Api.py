@@ -7,24 +7,29 @@ from lib.Application import Application
 
 class Api:
 
-    def readStudentAccountsFile():
+    def readStudentAccountsFile(self):
         user = User(0)
-        # user_id, user_username, user_Type
-        users = user.findMany()
-        f = open("studentAccouts.txt", "r")
+        f = open("studentAccounts.txt", "r")
+        if(not f):
+            return
         allLines = f.readlines()
-        n = len(allLines)
-        newUsers = []
-        for i in range(n):
-            line = allLines[i].split(" ", 3)
-            userName = line[0]
-            firstName = line[1]
-            lastName = line[2]
-            i = i + 1
-            password = allLines[i]
-            i = i + 1
-            newUsers.append({userName, firstName, lastName, password})
         f.close()
+        newUsers = []
+        for line in allLines:
+            temp = line.split()
+            for i in temp:
+                newUsers.append(i)
+        n = len(newUsers)
+        for i in range(0, n, 5):
+            if len(user.findMany()) >= 10:
+                print("Max User Limit Exceeded\n")
+                continue
+            if user.findOneByUsername(newUsers[i]) != None:
+                print("User Exists\n")
+                continue
+            userName, firstName, lastName, password = newUsers[i], newUsers[i+1], newUsers[i+2], newUsers[i+3]
+            user.create(userName, password, firstName, lastName, 0)
+            print("User Added" + "{ " + userName, firstName, lastName, password + " }\n")
         return None
     
     def readNewJobsFile():
@@ -136,3 +141,4 @@ class Api:
         self.writeMyCollegeUsersFile()
         self.writeMyCollegeAppliedJobsFile()
         self.writeMyCollegeSavedJobsFile()
+        self.readStudentAccountsFile()
