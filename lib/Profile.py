@@ -59,6 +59,15 @@ class Profile:
         profile = res.fetchone()
         #con.close()
         return profile
+    
+    def findAll(self,):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT profile_Id, profile_title, profile_description, profile_user_id FROM profiles")
+        profilesList = res.fetchall()
+        #con.close()
+        return profilesList
 
     
     def setMajor(self, major: str):
