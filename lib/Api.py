@@ -8,6 +8,23 @@ from lib.Application import Application
 class Api:
 
     def readStudentAccountsFile():
+        user = User(0)
+        # user_id, user_username, user_Type
+        users = user.findMany()
+        f = open("studentAccouts.txt", "r")
+        allLines = f.readlines()
+        n = len(allLines)
+        newUsers = []
+        for i in range(n):
+            line = allLines[i].split(" ", 3)
+            userName = line[0]
+            firstName = line[1]
+            lastName = line[2]
+            i = i + 1
+            password = allLines[i]
+            i = i + 1
+            newUsers.append({userName, firstName, lastName, password})
+        f.close()
         return None
     
     def readNewJobsFile():
