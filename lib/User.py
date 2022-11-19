@@ -39,6 +39,14 @@ class User:
         user = res.fetchone()
         return user
 
+    def findMany(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute(
+            "SELECT user_id, user_username, user_Type FROM users")
+        users = res.fetchall()
+        return users
+
     def findManyByLastname(self, lastname: str):
         lastname = "%" + lastname.lower() + "%"
         con = sqlite3.connect("incollege.db")
