@@ -1,4 +1,5 @@
 import sqlite3
+
 class Job:
 
     def create(self, title, description, employer, location, salary, userId):
@@ -97,6 +98,20 @@ class Job:
         cur.execute(
             "UPDATE jobsApplied SET status = ? WHERE job_id = ?",
             (newStatus, jobId))
+        con.commit()
+    
+    def checkStatus(self, jobId):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        newStatus = 0
+        res = cur.execute(
+            "SELECT status FROM jobsApplied WHERE job_id = ? LIMIT 1",
+            (jobId,))
+        jobApplication = res.fetchone()
+        if jobApplication[0]: 
+            return True
+        else: 
+            return False
         con.commit()
         
     def removeApplication(self, user_id):

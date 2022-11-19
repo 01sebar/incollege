@@ -57,9 +57,9 @@ class TestClass:
                               "Google", "San Francisco, CA", "500000", user4Id)
         applicationId = job.createApplication("2023", "2023-01-01",
                                               "lorem ipsum", user5Id, newJobId)
-        assert job.checkStatus(user5Id) == False
+        assert job.checkStatus(newJobId) == True
         job.updateStatus(newJobId)
-        assert job.checkStatus(user5Id) == True
+        assert job.checkStatus(newJobId) == False
 
     def testRemoveJob(self):
         user6 = User(None)
