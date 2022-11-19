@@ -783,5 +783,5 @@ def main():
 
 if __name__ == "__main__":
     api = Api()
-    api.writeMyCollegeJobsFile()
+    api.update()
     main()
