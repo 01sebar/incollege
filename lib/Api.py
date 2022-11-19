@@ -56,7 +56,20 @@ class Api:
         f.close()
         return None
     
-    def writeMyCollegeUsersFile():
+    def writeMyCollegeUsersFile(self):
+        user = User(0)
+        # user_id, user_username, user_Type
+        users = user.findMany()
+        f = open("MyCollege_users.txt", "w")
+        for u in users:
+            userType = "plus"
+            if u[2] == 1:
+                userType = "standard"
+            userUsername = u[1]
+            userFormatted = f'{userUsername} {userType}'
+            f.write(userFormatted)
+            f.write("\n=====\n")
+        f.close()
         return None
     
     def writeMyCollegeAppliedJobsFile():
@@ -68,3 +81,4 @@ class Api:
     def update(self):
         self.writeMyCollegeJobsFile()
         self.writeMyCollegeProfilesFile()
+        self.writeMyCollegeUsersFile()
