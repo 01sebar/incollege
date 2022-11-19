@@ -29,7 +29,7 @@ class Api:
                 # print("User Exists\n")
                 continue
             userName, firstName, lastName, password = newUsers[i], newUsers[i+1], newUsers[i+2], newUsers[i+3]
-            user.create(userName, password, firstName, lastName, 0)
+            user.create(userName, password, firstName, lastName, 1)
             # print("User Added" + "{ " + userName, firstName, lastName, password + " }\n")
         return None
     
