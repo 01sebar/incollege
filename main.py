@@ -10,6 +10,8 @@ from lib.screens.ProfileScreen import ProfileScreen
 from lib.screens.JobScreen import jobScreen
 from lib.screens.MessagingScreen import MessagingScreen
 from lib.Message import Message
+from lib.Notification import Notification
+from lib.Api import Api
 
 
 def postJobScreen(loggedInUser):
@@ -780,4 +782,6 @@ def main():
 
 
 if __name__ == "__main__":
+    api = Api()
+    api.writeMyCollegeJobsFile()
     main()
