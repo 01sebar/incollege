@@ -16,14 +16,13 @@ from lib.Api import Api
 
 def postJobScreen(loggedInUser):
     clearConsole()
-    con = sqlite3.connect("incollege.db")
-    cur = con.cursor()
-    res = cur.execute("SELECT COUNT() FROM jobs")
-    jobCount = res.fetchone()[0]
+    job = Job()
+    jobCount = job.jobCount()
     print("Number of jobs: " + str(jobCount))
     if (jobCount >= 10):
         print("\tReached limit on jobs posted.\n \tPlease come back later.\n")
         return None
+
     title = input("Enter the Title of the position you are posting: ")
 
     description = input("Enter the description of the position: ")
@@ -31,9 +30,9 @@ def postJobScreen(loggedInUser):
     employer = input("Enter name of employer: ")
 
     location = input("Enter location of employer: ")
+
     salary = input("Enter salary for the position: ")
 
-    job = Job()
     job.create(title, description, employer, location, salary,
                loggedInUser.getUserId())
     jobScreenList(loggedInUser)

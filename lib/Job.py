@@ -9,6 +9,12 @@ class Job:
                     (title, description, employer, location, salary, userId))
         con.commit()
         return cur.lastrowid
+    
+    def jobCount(self):
+        con = sqlite3.connect("incollege.db")
+        cur = con.cursor()
+        res = cur.execute("SELECT COUNT() FROM jobs")
+        return res.fetchone()[0]
 
     def findOne(self, jobId):
           con = sqlite3.connect("incollege.db")
@@ -17,6 +23,15 @@ class Job:
                       (jobId,))
           job = res.fetchone()
           return job
+
+    def findOneByName(self, jobName):
+          con = sqlite3.connect("incollege.db")
+          cur = con.cursor()
+          res = cur.execute("SELECT job_title FROM jobs WHERE job_title = ? LIMIT 1",
+                      (jobName,))
+          job = res.fetchone()
+          return job
+
     def findAll(self):
           con = sqlite3.connect("incollege.db")
           cur = con.cursor()

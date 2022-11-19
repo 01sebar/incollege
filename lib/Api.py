@@ -11,6 +11,7 @@ class Api:
         user = User(0)
         f = open("studentAccounts.txt", "r")
         if(not f):
+            # print("studentAccounts.txt does not exist!")
             return
         allLines = f.readlines()
         f.close()
@@ -22,17 +23,55 @@ class Api:
         n = len(newUsers)
         for i in range(0, n, 5):
             if len(user.findMany()) >= 10:
-                print("Max User Limit Exceeded\n")
+                # print("Max User Limit Exceeded\n")
                 continue
             if user.findOneByUsername(newUsers[i]) != None:
-                print("User Exists\n")
+                # print("User Exists\n")
                 continue
             userName, firstName, lastName, password = newUsers[i], newUsers[i+1], newUsers[i+2], newUsers[i+3]
             user.create(userName, password, firstName, lastName, 0)
-            print("User Added" + "{ " + userName, firstName, lastName, password + " }\n")
+            # print("User Added" + "{ " + userName, firstName, lastName, password + " }\n")
         return None
     
-    def readNewJobsFile():
+    def readNewJobsFile(self):
+        f = open("newJobs.txt", "r")
+        if(not f):
+            # print("newJobs.txt does not exist!")
+            return
+        allLines = f.readlines()
+        f.close()
+        job = Job()
+        newJobs= []
+        for line in allLines:
+            newJobs.append(line.split('\n',1)[0])
+        n = len(newJobs)
+        descLen = 0
+        for i in range(0, n, descLen+10):
+            if job.jobCount() >= 10:
+                # print("Max Job Limit Exceeded\n")
+                return
+            jobName = newJobs[i]
+            jobDesc = []
+            descLen = i+1
+            while newJobs[descLen] != "&&&":
+                tmpArr = []
+                tmp = str(newJobs[descLen])
+                tmpArr.append(tmp.split())
+                for x in tmpArr:
+                    tmp = ' '.join(x)
+                jobDesc.append(tmp)
+                descLen+=1
+            jobDesc = ' '.join(jobDesc)
+            if job.findOneByName(jobName) != None:
+                # print("Job Name Exists\n")
+                continue
+            jobPos = newJobs[descLen+1] # There is no job_position or job_poster in jobs table
+            jobEmp = newJobs[descLen+2]
+            jobLoc = newJobs[descLen+3]
+            jobSal = newJobs[descLen+4]
+            # print(jobName, jobDesc, jobPos, jobEmp, jobLoc, jobSal)
+            # print("\n\n")
+            job.create(jobName, jobDesc, jobEmp, jobLoc, jobSal, 0)
         return None
     
     def writeMyCollegeJobsFile(self):
@@ -142,3 +181,4 @@ class Api:
         self.writeMyCollegeAppliedJobsFile()
         self.writeMyCollegeSavedJobsFile()
         self.readStudentAccountsFile()
+        self.readNewJobsFile()
