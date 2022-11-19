@@ -3,6 +3,7 @@ from lib.Profile import Profile
 from lib.User import User
 from lib.Experience import Experience
 from lib.Education import Education
+from lib.Application import Application
 
 class Api:
 
@@ -72,7 +73,25 @@ class Api:
         f.close()
         return None
     
-    def writeMyCollegeAppliedJobsFile():
+    def writeMyCollegeAppliedJobsFile(self):
+        job = Job()
+        # job_id, job_title, job_description, job_employer, job_location, job_salary, job_user_id
+        jobs = job.findAll()
+        f = open("MyCollege_appliedJobs.txt", "w")
+        application = Application()
+        for j in jobs:
+            jobId = j[0]
+            jobTitle = j[1]
+            jobFormatted = f'{jobTitle}\n'
+            # job_applied_key, user_username, about_paragraph
+            applications = application.findMany(jobId)
+            for a in applications:
+                userName = a[1]
+                aboutParagraph = a[2]
+                jobFormatted += f'{userName}\n{aboutParagraph}'
+            f.write(jobFormatted)
+            f.write("\n=====\n")
+        f.close()
         return None
     
     def writeMyCollegeSavedJobsFile():
@@ -82,3 +101,4 @@ class Api:
         self.writeMyCollegeJobsFile()
         self.writeMyCollegeProfilesFile()
         self.writeMyCollegeUsersFile()
+        self.writeMyCollegeAppliedJobsFile()
