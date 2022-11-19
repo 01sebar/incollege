@@ -94,7 +94,23 @@ class Api:
         f.close()
         return None
     
-    def writeMyCollegeSavedJobsFile():
+    def writeMyCollegeSavedJobsFile(self):
+        user = User(None)
+        # user_id, user_username, ...
+        users = user.findMany()
+        job = Job()
+        f = open("MyCollege_savedJobs.txt", "w")
+        for u in users:
+            # job_id, job_title, ...
+            savedJobs = job.findAllInterested(u[0])
+            if len(savedJobs) != 0:
+                userUsername = u[1]
+                savedJobsFormatted = f'{userUsername}'
+                for sJ in savedJobs:
+                    savedJobsFormatted += f'\n{sJ[1]}'
+                f.write(savedJobsFormatted)
+                f.write("\n=====\n")
+        f.close()
         return None
     
     def update(self):
@@ -102,3 +118,4 @@ class Api:
         self.writeMyCollegeProfilesFile()
         self.writeMyCollegeUsersFile()
         self.writeMyCollegeAppliedJobsFile()
+        self.writeMyCollegeSavedJobsFile()
