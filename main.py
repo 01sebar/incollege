@@ -15,6 +15,8 @@ from lib.Api import Api
 
 
 def postJobScreen(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     job = Job()
     jobCount = job.jobCount()
@@ -39,6 +41,8 @@ def postJobScreen(loggedInUser):
 
 
 def jobScreenList(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     jobscreen = jobScreen(loggedInUser)
     job = Job()
@@ -69,6 +73,8 @@ def jobScreenList(loggedInUser):
 
 
 def deleteJob(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     jobs = Job()
     # getting all jobs posted by logged in user
@@ -97,6 +103,8 @@ def deleteJob(loggedInUser):
 
 
 def findSomeoneScreen(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("\n\tFind Someone you Know\n")
     print("\n\tSearch By:\n")
@@ -119,6 +127,8 @@ def findSomeoneScreen(loggedInUser):
 
 
 def findSomeoneByLastNameScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     print("\n\tFind Someone By Last Name Screen")
     lastname = input(
         "Enter the last name of the person you are searching for: ")
@@ -135,6 +145,8 @@ def findSomeoneByLastNameScreen(loggedInUser: User):
 
 
 def findSomeoneByUniversityScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     print("\n\tFind Someone By University Screen")
     university = input(
         "Enter the university of the person you are searching for: ")
@@ -151,6 +163,8 @@ def findSomeoneByUniversityScreen(loggedInUser: User):
 
 
 def findSomeoneByMajorScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     print("\n\Find Someone By Major Screen")
     major = input(
         "Enter the Major of the person you are searching for: ")
@@ -167,6 +181,8 @@ def findSomeoneByMajorScreen(loggedInUser: User):
 
 
 def sendFriendInviteScreen(loggedInUser: User, users):
+    api = Api()
+    api.update()
     if len(users) == 0:
         print("No users found")
         input("\tPress any key to return to find someone screen\n")
@@ -191,6 +207,8 @@ def sendFriendInviteScreen(loggedInUser: User, users):
 
 
 def showMyNetworkScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     print("\n\tShow My Network Screen")
     friend = Friend(loggedInUser.getUserId())
     friendsList = friend.getFriends()
@@ -247,6 +265,8 @@ def clearConsole():
 
 
 def skillsScreen(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("\n\tSkills Screen")
     print("Select a skill to learn: ")
@@ -261,6 +281,8 @@ def skillsScreen(loggedInUser):
 
 
 def optionsScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     clearConsole()
     notifications = Notification(loggedInUser)
     friend = Friend(loggedInUser.getUserId())
@@ -333,6 +355,8 @@ def optionsScreen(loggedInUser: User):
 
 
 def acceptInvitesScreen(loggedInUser: User):
+    api = Api()
+    api.update()
     print("\n\tAccept Invites Screen")
     friend = Friend(loggedInUser.getUserId())
     friendInvites = friend.getInvites()
@@ -410,6 +434,8 @@ def checkPassword(password):
 
 
 def login():
+    api = Api()
+    api.update()
     clearConsole()
     print("\n\tLogin Screen")
 
@@ -484,6 +510,8 @@ def signup():
 
 
 def videoScreen():
+    api = Api()
+    api.update()
     print("\n\tVideo is now playing\n")
     print("Press 1 to return to home screen.")
     print("Press 2 to replay video.")
@@ -499,6 +527,8 @@ def videoScreen():
 
 # Function for General Links
 def general(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("General\n")
     print("Press \"1\" for Sign Up.")
@@ -549,6 +579,8 @@ def general(loggedInUser):
 
 
 def userSettings(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("Guest Controls\n")
     if not loggedInUser:
@@ -598,6 +630,8 @@ def userSettings(loggedInUser):
 
 
 def languages(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("Languages\n")
     if not loggedInUser:
@@ -628,6 +662,8 @@ def languages(loggedInUser):
 
 
 def usefulLinks(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("Useful Links\n")
     print("Press \"1\" for General.")
@@ -653,6 +689,8 @@ def usefulLinks(loggedInUser):
 
 
 def InCollegeImportantLinks(loggedInUser):
+    api = Api()
+    api.update()
     clearConsole()
     print("InCollege Important Links\n")
     print("Press \"1\" for A Copyright Notice.")
@@ -748,6 +786,8 @@ def InCollegeImportantLinks(loggedInUser):
 
 
 def main():
+    api = Api()
+    api.update()
     clearConsole()
     print("\tHome Screen")
     print(
